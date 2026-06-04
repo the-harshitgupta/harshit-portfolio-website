@@ -323,6 +323,7 @@ async function main() {
       data: {
         name: "Sample Lead",
         email: "sample@example.com",
+        phone: "+91 98765 43210",
         business: "Example D2C Brand",
         need: "ICP & Buyer Persona Research",
         message: "This is a sample lead so you can see how the admin looks.",
