@@ -121,3 +121,4 @@ Portfolio_App/
 ```
 Deployment trigger: Vercel production rebuild.
 SEO domain update trigger.
+Security environment update trigger.
