@@ -31,6 +31,7 @@ model Lead {
   id        String   @id @default(cuid())
   name      String
   email     String
+  phone     String?
   business  String?
   need      String?
   message   String?
