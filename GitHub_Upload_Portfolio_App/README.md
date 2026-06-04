@@ -120,3 +120,4 @@ Portfolio_App/
 └─ RESET_DATABASE.bat
 ```
 Deployment trigger: Vercel production rebuild.
+SEO domain update trigger.
