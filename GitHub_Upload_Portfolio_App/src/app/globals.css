@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --teal: #0a8f96;
+  --teal-deep: #006f74;
+  --navy: #0b1f4c;
+  --gold: #d79a2d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f7faf9;
+  color: #142028;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .wrap {
+    width: min(1160px, 92vw);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
+  }
+  .btn-primary {
+    @apply bg-navy text-white shadow-[0_10px_24px_rgba(11,31,76,.22)] hover:-translate-y-0.5 hover:bg-navy-soft;
+  }
+  .btn-ghost {
+    @apply border-[1.5px] border-line text-ink hover:border-teal-deep hover:text-teal-deep;
+  }
+  .sec-tag {
+    @apply text-[0.76rem] font-bold uppercase tracking-[2px] text-teal-deep;
+  }
+  .pill {
+    @apply rounded-full border border-[#d6ebeb] bg-[#eef6f6] px-3.5 py-1.5 text-[0.82rem] font-semibold text-teal-deep;
+  }
+  .card-base {
+    @apply rounded-xl2 border border-line bg-white shadow-sm2;
+  }
+  .field {
+    @apply w-full rounded-xl border border-line bg-[#fbfdfd] px-3.5 py-3 text-sm transition focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal/20;
+  }
+  .label {
+    @apply mb-1.5 mt-3 block text-[0.82rem] font-semibold;
+  }
+}
+
+/* Blog typography */
+.prose-blog {
+  @apply text-[1.05rem] leading-[1.8] text-ink;
+}
+.prose-blog h2 {
+  @apply mt-10 mb-3 font-serif text-2xl font-bold text-navy;
+}
+.prose-blog h3 {
+  @apply mt-8 mb-2 font-serif text-xl font-semibold text-navy;
+}
+.prose-blog p {
+  @apply mb-5 text-muted;
+}
+.prose-blog ul {
+  @apply mb-5 ml-5 list-disc space-y-2 text-muted;
+}
+.prose-blog ol {
+  @apply mb-5 ml-5 list-decimal space-y-2 text-muted;
+}
+.prose-blog a {
+  @apply font-medium text-teal-deep underline underline-offset-2;
+}
+.prose-blog blockquote {
+  @apply my-6 border-l-4 border-teal pl-5 italic text-muted;
+}
+.prose-blog strong {
+  @apply text-ink;
+}
+.prose-blog code {
+  @apply rounded bg-[#eef4f4] px-1.5 py-0.5 text-[0.92em] text-teal-deep;
+}
+.prose-blog img {
+  @apply my-6 rounded-xl border border-line;
+}
+
+/* reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
