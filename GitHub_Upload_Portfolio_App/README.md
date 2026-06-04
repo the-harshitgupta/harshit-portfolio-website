@@ -119,3 +119,4 @@ Portfolio_App/
 ├─ START_WEBSITE.bat
 └─ RESET_DATABASE.bat
 ```
+Deployment trigger: Vercel production rebuild.
