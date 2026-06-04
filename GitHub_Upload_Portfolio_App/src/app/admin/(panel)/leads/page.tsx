@@ -38,6 +38,7 @@ export default async function AdminLeadsPage() {
                     id: l.id,
                     name: l.name,
                     email: l.email,
+                    phone: l.phone,
                     business: l.business,
                     need: l.need,
                     message: l.message,
