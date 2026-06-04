@@ -12,6 +12,7 @@ export default function LeadRow({
     id: string;
     name: string;
     email: string;
+    phone: string | null;
     business: string | null;
     need: string | null;
     message: string | null;
@@ -53,6 +54,14 @@ export default function LeadRow({
           >
             {lead.email}
           </a>
+          {lead.phone && (
+            <a
+              href={`tel:${lead.phone.replace(/[^\d+]/g, "")}`}
+              className="block text-xs text-muted hover:text-teal-deep hover:underline"
+            >
+              {lead.phone}
+            </a>
+          )}
           {lead.business && (
             <div className="text-xs text-muted">{lead.business}</div>
           )}
