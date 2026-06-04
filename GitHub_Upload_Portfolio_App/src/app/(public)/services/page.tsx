@@ -3,7 +3,8 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
-import { services, processSteps } from "@/lib/site";
+import { processSteps } from "@/lib/site";
+import { getPublishedServices } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Services & Pricing",
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
     "GTM strategy, ICP & buyer persona research, brand positioning, marketing analytics, and AI content strategy. Clear deliverables with INR and USD pricing.",
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getPublishedServices();
+
   return (
     <>
       <section className="py-20">
