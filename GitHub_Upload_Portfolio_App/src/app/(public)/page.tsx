@@ -4,9 +4,10 @@ import Hero3D from "@/components/Hero3D";
 import Reveal from "@/components/Reveal";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
-import { services, works, processSteps, site } from "@/lib/site";
+import { works, processSteps, site } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
+import { getPublishedServices } from "@/lib/services";
 
 export const revalidate = 60;
 
@@ -23,7 +24,10 @@ async function getLatestPosts() {
 }
 
 export default async function HomePage() {
-  const posts = await getLatestPosts();
+  const [posts, services] = await Promise.all([
+    getLatestPosts(),
+    getPublishedServices(),
+  ]);
 
   return (
     <>
