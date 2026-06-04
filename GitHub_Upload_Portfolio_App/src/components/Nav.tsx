@@ -24,8 +24,13 @@ export default function Nav() {
       }`}
     >
       <div className="wrap flex h-[72px] items-center justify-between">
-        <Link href="/" className="font-serif text-xl font-extrabold tracking-tight">
-          Harshit<span className="text-teal-deep">.</span>Gupta
+        <Link href="/" className="flex items-center" aria-label={`${site.name} home`}>
+          {/* SVG wordmark keeps the header crisp on all screen sizes. */}
+          <img
+            src="/brand-logo.svg"
+            alt={`${site.name} logo`}
+            className="h-12 w-auto md:h-14"
+          />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
