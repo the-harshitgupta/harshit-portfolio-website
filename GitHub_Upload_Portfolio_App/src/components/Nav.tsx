@@ -23,13 +23,13 @@ export default function Nav() {
           : "border-b border-transparent bg-cream/70"
       }`}
     >
-      <div className="wrap flex h-[72px] items-center justify-between">
+      <div className="wrap flex h-[82px] items-center justify-between">
         <Link href="/" className="flex items-center" aria-label={`${site.name} home`}>
           {/* SVG wordmark keeps the header crisp on all screen sizes. */}
           <img
             src="/brand-logo.svg"
             alt={`${site.name} logo`}
-            className="h-12 w-auto md:h-14"
+            className="h-[52px] w-auto md:h-[60px]"
           />
         </Link>
 
