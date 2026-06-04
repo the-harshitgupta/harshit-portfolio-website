@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -38,4 +38,20 @@ model Lead {
   createdAt DateTime @default(now())
 
   @@index([status, createdAt])
+}
+
+model Service {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  icon      String   @default("*")
+  title     String
+  blurb     String
+  price     String
+  bullets   String   @default("") // newline-separated bullets
+  sortOrder Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, sortOrder])
 }

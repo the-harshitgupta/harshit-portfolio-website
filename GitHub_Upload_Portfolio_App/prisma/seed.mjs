@@ -164,6 +164,105 @@ Get this right and everything downstream (ads, content, packaging) gets easier a
   },
 ];
 
+const services = [
+  {
+    slug: "icp-buyer-persona-research",
+    icon: "O",
+    title: "ICP & Buyer Persona Research",
+    blurb:
+      "Know exactly who to target, what they care about, why they buy, and how to message them, from reviews, competitors, and AI-assisted analysis.",
+    price: "From Rs.4,999 / $79",
+    sortOrder: 10,
+    bullets: [
+      "1-3 detailed buyer personas",
+      "Pains, triggers & objections",
+      "Competitor messaging gaps",
+      "Customer-language messaging angles",
+      "Channel & targeting recommendations",
+    ],
+  },
+  {
+    slug: "gtm-clarity-sprint",
+    icon: "A",
+    title: "GTM Clarity Sprint",
+    blurb:
+      "ICP, positioning, competitor scan, offer messaging, and a 30-day content & campaign roadmap, delivered in days.",
+    price: "From Rs.14,999 / $249",
+    sortOrder: 20,
+    bullets: [
+      "ICP + positioning statement",
+      "Competitor scan",
+      "Offer & messaging framework",
+      "30-day campaign roadmap",
+      "Channel priority plan",
+    ],
+  },
+  {
+    slug: "brand-positioning-rewrite",
+    icon: "B",
+    title: "Brand Positioning Rewrite",
+    blurb:
+      "A sharper one-line positioning, homepage hero rewrite, offer messaging, and clear differentiation buyers understand fast.",
+    price: "From Rs.4,999 / $79",
+    sortOrder: 30,
+    bullets: [
+      "One-line positioning",
+      "Homepage hero rewrite",
+      "Value proposition",
+      "Differentiation angles",
+      "Messaging do's & don'ts",
+    ],
+  },
+  {
+    slug: "founder-growth-playbook",
+    icon: "D",
+    title: "Founder Growth Playbook",
+    blurb:
+      "ICP deck, funnel map, content pillars, KPI dashboard structure, and complete marketing direction before you hire or scale.",
+    price: "From Rs.39,999 / $699",
+    sortOrder: 40,
+    bullets: [
+      "ICP & persona deck",
+      "Full funnel map",
+      "Content pillar system",
+      "KPI dashboard structure",
+      "90-day execution plan",
+    ],
+  },
+  {
+    slug: "marketing-analytics-kpis",
+    icon: "K",
+    title: "Marketing Analytics & KPIs",
+    blurb:
+      "A simple KPI framework and dashboard so you track leads, conversion, and growth, not vanity metrics.",
+    price: "From Rs.6,999 / $120",
+    sortOrder: 50,
+    bullets: [
+      "KPI framework",
+      "Dashboard structure (Power BI/Sheets)",
+      "Funnel metrics map",
+      "Reporting cadence",
+      "What-to-track checklist",
+    ],
+  },
+  {
+    slug: "ai-content-strategy-system",
+    icon: "AI",
+    title: "AI Content Strategy System",
+    blurb:
+      "Content pillars, a 30-day calendar, a hook bank, and an AI-assisted repurposing workflow tied to leads.",
+    price: "From Rs.9,999 / $150",
+    sortOrder: 60,
+    bullets: [
+      "5 content pillars",
+      "30-day content calendar",
+      "Hook & angle bank",
+      "AI repurposing workflow",
+      "Content-to-lead funnel",
+    ],
+  },
+];
+
 async function main() {
   console.log("Seeding database...");
 
@@ -195,6 +294,27 @@ async function main() {
       },
     });
     console.log("  [ok] " + p.slug);
+  }
+
+  for (const s of services) {
+    const existing = await prisma.service.findUnique({ where: { slug: s.slug } });
+    if (!existing) {
+      await prisma.service.create({
+        data: {
+          slug: s.slug,
+          icon: s.icon,
+          title: s.title,
+          blurb: s.blurb,
+          price: s.price,
+          bullets: s.bullets.join("\n"),
+          sortOrder: s.sortOrder,
+          published: true,
+        },
+      });
+      console.log("  [ok] service " + s.slug);
+    } else {
+      console.log("  [skip] service " + s.slug);
+    }
   }
 
   const leadCount = await prisma.lead.count();
