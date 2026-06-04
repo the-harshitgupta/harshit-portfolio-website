@@ -2,12 +2,14 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^[0-9+\-()\s]{7,20}$/;
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const name = String(body.name || "").trim();
     const email = String(body.email || "").trim();
+    const phone = String(body.phone || "").trim();
     const business = String(body.business || "").trim();
     const need = String(body.need || "").trim();
     const message = String(body.message || "").trim();
@@ -18,6 +20,9 @@ export async function POST(req: Request) {
     if (!EMAIL_RE.test(email)) {
       return NextResponse.json({ error: "Please enter a valid email." }, { status: 400 });
     }
+    if (!PHONE_RE.test(phone)) {
+      return NextResponse.json({ error: "Please enter a valid phone number." }, { status: 400 });
+    }
     // honeypot (optional field named "company" left empty by humans)
     if (body.company) {
       return NextResponse.json({ ok: true });
@@ -27,6 +32,7 @@ export async function POST(req: Request) {
       data: {
         name,
         email,
+        phone,
         business: business || null,
         need: need || null,
         message: message || null,
