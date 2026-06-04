@@ -5,10 +5,11 @@ import { formatDate } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const [postCount, publishedCount, leadCount, newLeads, recentLeads] =
+  const [postCount, publishedCount, serviceCount, leadCount, newLeads, recentLeads] =
     await Promise.all([
       prisma.post.count(),
       prisma.post.count({ where: { published: true } }),
+      prisma.service.count(),
       prisma.lead.count(),
       prisma.lead.count({ where: { status: "new" } }),
       prisma.lead.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
@@ -17,6 +18,7 @@ export default async function AdminDashboard() {
   const stats = [
     { label: "Total posts", value: postCount },
     { label: "Published", value: publishedCount },
+    { label: "Services", value: serviceCount },
     { label: "Total leads", value: leadCount },
     { label: "New leads", value: newLeads, accent: true },
   ];
@@ -28,7 +30,7 @@ export default async function AdminDashboard() {
         Overview of your content and leads.
       </p>
 
-      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-5">
         {stats.map((s) => (
           <div key={s.label} className="card-base bg-white p-5">
             <div
@@ -44,6 +46,9 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-3">
+        <Link href="/admin/services" className="btn btn-primary">
+          Manage services
+        </Link>
         <Link href="/admin/posts/new" className="btn btn-primary">
           + New blog post
         </Link>
