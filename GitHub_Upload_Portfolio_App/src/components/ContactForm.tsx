@@ -96,15 +96,33 @@ export default function ContactForm({
         </div>
       </div>
 
-      <label className="label" htmlFor="business">
-        Business / Website
-      </label>
-      <input
-        id="business"
-        name="business"
-        className="field"
-        placeholder="Brand name or link"
-      />
+      <div className="grid gap-x-4 sm:grid-cols-2">
+        <div>
+          <label className="label" htmlFor="phone">
+            Phone Number
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            className="field"
+            placeholder="+91 98765 43210"
+            required
+          />
+        </div>
+        <div>
+          <label className="label" htmlFor="business">
+            Business / Website
+          </label>
+          <input
+            id="business"
+            name="business"
+            className="field"
+            placeholder="Brand name or link"
+          />
+        </div>
+      </div>
 
       <label className="label" htmlFor="need">
         What do you need help with?
