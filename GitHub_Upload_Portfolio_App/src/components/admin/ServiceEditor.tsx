@@ -11,6 +11,10 @@ export type ServiceData = {
   blurb: string;
   price: string;
   bullets: string;
+  seoTitle: string;
+  seoDescription: string;
+  details: string;
+  faqs: string;
   sortOrder: number;
   published: boolean;
 };
@@ -22,6 +26,10 @@ const empty: ServiceData = {
   blurb: "",
   price: "",
   bullets: "",
+  seoTitle: "",
+  seoDescription: "",
+  details: "",
+  faqs: "",
   sortOrder: 100,
   published: true,
 };
@@ -174,6 +182,52 @@ export default function ServiceEditor({ initial }: { initial?: ServiceData }) {
         value={data.bullets}
         onChange={(e) => set("bullets", e.target.value)}
         placeholder={"Buyer persona profile\nPain points\nMessaging angles"}
+      />
+
+      <label className="label" htmlFor="seoTitle">
+        SEO title (optional)
+      </label>
+      <input
+        id="seoTitle"
+        className="field"
+        value={data.seoTitle}
+        onChange={(e) => set("seoTitle", e.target.value)}
+        placeholder="ICP & Buyer Persona Research Consultant | Harshit Gupta"
+      />
+
+      <label className="label" htmlFor="seoDescription">
+        SEO description (optional)
+      </label>
+      <textarea
+        id="seoDescription"
+        className="field min-h-[80px] resize-y"
+        value={data.seoDescription}
+        onChange={(e) => set("seoDescription", e.target.value)}
+        placeholder="A search-friendly description for this service page."
+      />
+
+      <label className="label" htmlFor="details">
+        Service page details (Markdown supported)
+      </label>
+      <textarea
+        id="details"
+        className="field min-h-[220px] resize-y font-mono text-[0.9rem]"
+        value={data.details}
+        onChange={(e) => set("details", e.target.value)}
+        placeholder={"## Who this is for\n\nExplain the service in detail."}
+      />
+
+      <label className="label" htmlFor="faqs">
+        FAQs (question, answer, then --- between FAQs)
+      </label>
+      <textarea
+        id="faqs"
+        className="field min-h-[180px] resize-y font-mono text-[0.9rem]"
+        value={data.faqs}
+        onChange={(e) => set("faqs", e.target.value)}
+        placeholder={
+          "Who is this for?\nFounders who need clearer positioning.\n---\nHow fast can we start?\nUsually within 1-2 business days."
+        }
       />
 
       <label className="mt-4 flex items-center gap-2 text-sm font-medium">
