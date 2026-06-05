@@ -11,42 +11,42 @@ export async function POST(req: Request) {
   try {
     const b = await req.json();
     const title = String(b.title || "").trim();
-    const blurb = String(b.blurb || "").trim();
-    const price = String(b.price || "").trim();
+    const tag = String(b.tag || "").trim();
+    const desc = String(b.desc || "").trim();
+    const image = String(b.image || "").trim();
+    const href = String(b.href || "").trim();
+    const cta = String(b.cta || "").trim();
 
-    if (!title || !blurb || !price) {
+    if (!title || !tag || !desc || !image || !href || !cta) {
       return NextResponse.json(
-        { error: "Title, description, and price are required." },
+        { error: "Title, tag, description, image, link, and CTA are required." },
         { status: 400 }
       );
     }
 
     let slug = slugify(String(b.slug || title));
-    const existing = await prisma.service.findUnique({ where: { slug } });
+    const existing = await prisma.workItem.findUnique({ where: { slug } });
     if (existing) slug = `${slug}-${Date.now().toString().slice(-5)}`;
 
-    const service = await prisma.service.create({
+    const item = await prisma.workItem.create({
       data: {
-        title,
         slug,
-        icon: String(b.icon || "*").trim().slice(0, 8) || "*",
-        blurb,
-        price,
-        bullets: String(b.bullets || "").trim(),
-        seoTitle: String(b.seoTitle || "").trim() || null,
-        seoDescription: String(b.seoDescription || "").trim() || null,
-        details: String(b.details || "").trim(),
-        faqs: String(b.faqs || "").trim(),
+        title,
+        tag,
+        desc,
+        image,
+        href,
+        cta,
         sortOrder: Number(b.sortOrder) || 100,
         published: Boolean(b.published),
       },
     });
 
-    return NextResponse.json({ ok: true, id: service.id, slug: service.slug });
+    return NextResponse.json({ ok: true, id: item.id, slug: item.slug });
   } catch (err) {
     console.error(err);
     return NextResponse.json(
-      { error: "Could not create service." },
+      { error: "Could not create work item." },
       { status: 500 }
     );
   }

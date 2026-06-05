@@ -24,6 +24,10 @@ export default async function EditServicePage({
           blurb: service.blurb,
           price: service.price,
           bullets: service.bullets,
+          seoTitle: service.seoTitle || "",
+          seoDescription: service.seoDescription || "",
+          details: service.details,
+          faqs: service.faqs,
           sortOrder: service.sortOrder,
           published: service.published,
         }}
