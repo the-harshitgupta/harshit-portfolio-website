@@ -4,14 +4,21 @@ import { site } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = site.url;
-  const staticRoutes = ["", "/about", "/services", "/work", "/blog", "/contact"].map(
-    (path) => ({
+  const staticRoutes = [
+    "",
+    "/about",
+    "/services",
+    "/work",
+    "/blog",
+    "/contact",
+    "/resources/icp-checklist",
+    "/workshop",
+  ].map((path) => ({
       url: `${base}${path}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
-      priority: path === "" ? 1 : 0.7,
-    })
-  );
+      priority: path === "" ? 1 : path === "/resources/icp-checklist" ? 0.85 : 0.7,
+    }));
 
   let postRoutes: MetadataRoute.Sitemap = [];
   let serviceRoutes: MetadataRoute.Sitemap = [];
