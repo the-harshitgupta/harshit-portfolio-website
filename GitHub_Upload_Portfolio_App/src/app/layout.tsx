@@ -35,6 +35,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.name }],
   creator: site.name,
+  alternates: { canonical: site.url },
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -49,9 +50,6 @@ export const metadata: Metadata = {
     description: site.description,
   },
   robots: { index: true, follow: true },
-  verification: {
-  google: "h6dUufm5lAc-NCuFIVYpi2v_EUm-6Ry21iHmAGEwXCgE",
-},
 };
 
 export default function RootLayout({
@@ -59,7 +57,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const jsonLd = {
+  const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: site.name,
@@ -69,11 +67,30 @@ export default function RootLayout({
     address: { "@type": "PostalAddress", addressLocality: site.location },
     sameAs: [site.socials.linkedin, site.socials.instagram, site.socials.fiverr],
   };
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: site.name,
+    url: site.url,
+    email: site.email,
+    image: `${site.url}/harshit.png`,
+    description: site.description,
+    address: { "@type": "PostalAddress", addressLocality: site.location },
+    areaServed: ["India", "United States", "United Kingdom", "Worldwide"],
+    serviceType: [
+      "GTM Strategy",
+      "ICP Research",
+      "Brand Positioning",
+      "Marketing Analytics",
+      "AI Marketing Strategy",
+    ],
+    sameAs: [site.socials.linkedin, site.socials.instagram, site.socials.fiverr],
+  };
 
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans">
-                <script
+        <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-KDYQFKEVV1"
         />
@@ -89,7 +106,11 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
         />
         {children}
       </body>

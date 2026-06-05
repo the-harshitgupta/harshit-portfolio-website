@@ -14,6 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   let postRoutes: MetadataRoute.Sitemap = [];
+  let serviceRoutes: MetadataRoute.Sitemap = [];
   try {
     const posts = await prisma.post.findMany({
       where: { published: true },
@@ -28,6 +29,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } catch {
     postRoutes = [];
   }
+  try {
+    const services = await prisma.service.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true },
+    });
+    serviceRoutes = services.map((s) => ({
+      url: `${base}/services/${s.slug}`,
+      lastModified: s.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }));
+  } catch {
+    serviceRoutes = [];
+  }
 
-  return [...staticRoutes, ...postRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...postRoutes];
 }
