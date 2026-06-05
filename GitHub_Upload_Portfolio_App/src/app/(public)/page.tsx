@@ -5,6 +5,7 @@ import Reveal from "@/components/Reveal";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import LeadMagnetForm from "@/components/LeadMagnetForm";
 import { processSteps, site } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
@@ -133,6 +134,34 @@ export default async function HomePage() {
               See all services & pricing
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* LEAD MAGNET */}
+      <section className="py-24">
+        <div className="wrap grid items-center gap-10 md:grid-cols-[1fr_0.9fr]">
+          <Reveal>
+            <div className="sec-tag">Free Resource</div>
+            <h2 className="mt-3 font-serif text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold leading-tight tracking-tight">
+              Download the Free ICP Clarity Checklist.
+            </h2>
+            <p className="mt-4 text-muted">
+              If you are not sure who your best customer is, start here. This
+              checklist helps you define your ICP, find real customer language,
+              and write a simple positioning statement in 7 days.
+            </p>
+            <ul className="mt-5 space-y-2 text-sm text-muted">
+              <li>1. Identify your best-fit customer segment.</li>
+              <li>2. Find pains, triggers, objections, and buying language.</li>
+              <li>3. Turn your research into clearer content and messaging.</li>
+            </ul>
+            <Link href="/resources/icp-checklist" className="btn btn-ghost mt-7">
+              Learn what is inside
+            </Link>
+          </Reveal>
+          <Reveal delay={100}>
+            <LeadMagnetForm compact />
+          </Reveal>
         </div>
       </section>
 
