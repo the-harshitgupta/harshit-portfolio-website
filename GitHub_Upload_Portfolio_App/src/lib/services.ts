@@ -9,8 +9,17 @@ export type DisplayService = {
   blurb: string;
   price: string;
   bullets: string[];
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  details: string;
+  faqs: string;
   sortOrder: number;
   published: boolean;
+};
+
+export type ServiceFaq = {
+  question: string;
+  answer: string;
 };
 
 export function splitBullets(bullets: string): string[] {
@@ -31,9 +40,45 @@ function fallback(): DisplayService[] {
     blurb: s.blurb,
     price: s.price,
     bullets: s.bullets,
+    seoTitle: `${s.title} | Harshit Gupta`,
+    seoDescription: s.blurb,
+    details: "",
+    faqs: "",
     sortOrder: (i + 1) * 10,
     published: true,
   }));
+}
+
+function mapService(s: {
+  id: string;
+  slug: string;
+  icon: string;
+  title: string;
+  blurb: string;
+  price: string;
+  bullets: string;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  details: string;
+  faqs: string;
+  sortOrder: number;
+  published: boolean;
+}): DisplayService {
+  return {
+    id: s.id,
+    slug: s.slug,
+    icon: s.icon,
+    title: s.title,
+    blurb: s.blurb,
+    price: s.price,
+    bullets: splitBullets(s.bullets),
+    seoTitle: s.seoTitle,
+    seoDescription: s.seoDescription,
+    details: s.details,
+    faqs: s.faqs,
+    sortOrder: s.sortOrder,
+    published: s.published,
+  };
 }
 
 export async function getPublishedServices(): Promise<DisplayService[]> {
@@ -45,18 +90,37 @@ export async function getPublishedServices(): Promise<DisplayService[]> {
 
     if (rows.length === 0) return fallback();
 
-    return rows.map((s) => ({
-      id: s.id,
-      slug: s.slug,
-      icon: s.icon,
-      title: s.title,
-      blurb: s.blurb,
-      price: s.price,
-      bullets: splitBullets(s.bullets),
-      sortOrder: s.sortOrder,
-      published: s.published,
-    }));
+    return rows.map(mapService);
   } catch {
     return fallback();
   }
+}
+
+export async function getPublishedServiceBySlug(
+  slug: string
+): Promise<DisplayService | null> {
+  try {
+    const service = await prisma.service.findFirst({
+      where: { slug, published: true },
+    });
+    return service ? mapService(service) : null;
+  } catch {
+    return fallback().find((s) => s.slug === slug) || null;
+  }
+}
+
+export function parseFaqs(input: string): ServiceFaq[] {
+  return input
+    .split("---")
+    .map((block) => {
+      const [question, ...answerLines] = block
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+      return {
+        question: question || "",
+        answer: answerLines.join(" "),
+      };
+    })
+    .filter((faq) => faq.question && faq.answer);
 }

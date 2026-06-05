@@ -6,7 +6,7 @@ export const site = {
   description:
     "GTM, ICP research, brand positioning, marketing analytics, and AI-assisted marketing strategy for startups, D2C brands, and small businesses.",
   email: "harshit.growthpilot@gmail.com",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.theharshitgupta.com",
   location: "New Delhi, India",
   socials: {
     linkedin: "https://www.linkedin.com/in/the-harshitgupta",
