@@ -263,6 +263,98 @@ const services = [
   },
 ];
 
+const works = [
+  {
+    slug: "nudgeai-go-to-market-plan",
+    tag: "B2B SaaS / GTM",
+    title: "NudgeAI Go-To-Market Plan",
+    desc: "ICP, competitor gaps, positioning, and a 90-day launch roadmap for a B2B sales intelligence product.",
+    image: "/work/portfolio_nudgeai.png",
+    href: "/work/NudgeAI_GTM_Sample.pdf",
+    cta: "View sample PDF",
+    sortOrder: 10,
+  },
+  {
+    slug: "glow-co-icp-personas",
+    tag: "D2C / Brand Strategy",
+    title: "Glow & Co ICP & Personas",
+    desc: "Audience strategy and buyer personas for a D2C skincare brand, with messaging and content direction.",
+    image: "/work/portfolio_glow.png",
+    href: "/work/Glow_Co_ICP_Sample.pdf",
+    cta: "View sample PDF",
+    sortOrder: 20,
+  },
+  {
+    slug: "icp-buyer-persona-research-sample",
+    tag: "Research / Positioning",
+    title: "ICP & Buyer Persona Research",
+    desc: "A productized research deliverable: pains, buying triggers, objections, competitor insight, and messaging angles.",
+    image: "/work/portfolio_icp.png",
+    href: "/contact",
+    cta: "Request this service",
+    sortOrder: 30,
+  },
+];
+
+const testimonials = [
+  {
+    name: "Aarav Mehta",
+    role: "Founder",
+    company: "B2B SaaS Startup",
+    quote:
+      "Harshit helped us simplify our ICP and positioning into a message our buyers actually understood. The roadmap was practical and easy to execute.",
+    sortOrder: 10,
+  },
+  {
+    name: "Riya Sharma",
+    role: "Brand Lead",
+    company: "D2C Skincare Brand",
+    quote:
+      "The buyer persona research gave us clear content angles, objections, and messaging gaps. It immediately improved how we briefed campaigns.",
+    sortOrder: 20,
+  },
+  {
+    name: "Karan Malhotra",
+    role: "Consultant",
+    company: "Growth Advisory",
+    quote:
+      "Sharp thinking, clear deliverables, and no fluff. The GTM sprint made it obvious which customer segment and channel we should prioritize first.",
+    sortOrder: 30,
+  },
+];
+
+function serviceSeo(s) {
+  const details = `## What this includes
+
+${s.blurb}
+
+This service is designed for founders, D2C teams, SaaS operators, and small businesses that need practical marketing clarity before spending more on campaigns.
+
+## Deliverables
+
+${s.bullets.map((b) => `- ${b}`).join("\n")}
+
+## Best fit
+
+Use this when you want sharper targeting, clearer messaging, and a practical next-step roadmap instead of broad marketing advice.`;
+
+  const faqs = `Who is this service best for?
+This is best for founders, startups, D2C brands, SaaS teams, and small businesses that need clearer marketing direction before scaling campaigns.
+---
+What will I receive?
+You receive a practical strategy deliverable with clear recommendations, messaging direction, and next steps based on the selected service.
+---
+How do we get started?
+Submit the contact form with your business details. I will review your context and suggest the best next step.`;
+
+  return {
+    seoTitle: `${s.title} | Harshit Gupta`,
+    seoDescription: s.blurb,
+    details,
+    faqs,
+  };
+}
+
 async function main() {
   console.log("Seeding database...");
 
@@ -298,6 +390,7 @@ async function main() {
 
   for (const s of services) {
     const existing = await prisma.service.findUnique({ where: { slug: s.slug } });
+    const seo = serviceSeo(s);
     if (!existing) {
       await prisma.service.create({
         data: {
@@ -307,13 +400,61 @@ async function main() {
           blurb: s.blurb,
           price: s.price,
           bullets: s.bullets.join("\n"),
+          seoTitle: seo.seoTitle,
+          seoDescription: seo.seoDescription,
+          details: seo.details,
+          faqs: seo.faqs,
           sortOrder: s.sortOrder,
           published: true,
         },
       });
       console.log("  [ok] service " + s.slug);
     } else {
-      console.log("  [skip] service " + s.slug);
+      const missingSeo =
+        !existing.seoTitle || !existing.seoDescription || !existing.details || !existing.faqs;
+      if (missingSeo) {
+        await prisma.service.update({
+          where: { id: existing.id },
+          data: {
+            seoTitle: existing.seoTitle || seo.seoTitle,
+            seoDescription: existing.seoDescription || seo.seoDescription,
+            details: existing.details || seo.details,
+            faqs: existing.faqs || seo.faqs,
+          },
+        });
+        console.log("  [ok] service seo " + s.slug);
+      } else {
+        console.log("  [skip] service " + s.slug);
+      }
+    }
+  }
+
+  for (const w of works) {
+    await prisma.workItem.upsert({
+      where: { slug: w.slug },
+      update: {},
+      create: { ...w, published: true },
+    });
+    console.log("  [ok] work " + w.slug);
+  }
+
+  for (const [i, t] of testimonials.entries()) {
+    const existing = await prisma.testimonial.findFirst({
+      where: { name: t.name, company: t.company },
+    });
+    if (!existing) {
+      await prisma.testimonial.create({
+        data: {
+          ...t,
+          image: null,
+          rating: 5,
+          sortOrder: t.sortOrder || (i + 1) * 10,
+          published: true,
+        },
+      });
+      console.log("  [ok] testimonial " + t.name);
+    } else {
+      console.log("  [skip] testimonial " + t.name);
     }
   }
 

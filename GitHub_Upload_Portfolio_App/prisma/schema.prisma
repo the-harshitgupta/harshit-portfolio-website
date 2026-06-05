@@ -50,6 +50,43 @@ model Service {
   blurb     String
   price     String
   bullets   String   @default("") // newline-separated bullets
+  seoTitle  String?
+  seoDescription String?
+  details   String   @default("")
+  faqs      String   @default("") // question and answer pairs separated by ---
+  sortOrder Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, sortOrder])
+}
+
+model WorkItem {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  tag       String
+  title     String
+  desc      String
+  image     String
+  href      String
+  cta       String
+  sortOrder Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, sortOrder])
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String?
+  company   String?
+  quote     String
+  image     String?
+  rating    Int      @default(5)
   sortOrder Int      @default(0)
   published Boolean  @default(true)
   createdAt DateTime @default(now())
