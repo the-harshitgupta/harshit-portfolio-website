@@ -27,6 +27,12 @@ export default function CTASection() {
             >
               See Sample Work
             </Link>
+            <Link
+              href="/resources/icp-checklist"
+              className="btn border-[1.5px] border-white/40 text-white hover:bg-white/10"
+            >
+              Free ICP Checklist
+            </Link>
           </div>
         </Reveal>
       </div>
