@@ -12,39 +12,12 @@ export type DisplayTestimonial = {
   published: boolean;
 };
 
-const fallbackTestimonials: DisplayTestimonial[] = [
-  {
-    name: "Aarav Mehta",
-    role: "Founder",
-    company: "B2B SaaS Startup",
-    quote:
-      "Harshit helped us simplify our ICP and positioning into a message our buyers actually understood. The roadmap was practical and easy to execute.",
-    image: null,
-    rating: 5,
-    sortOrder: 10,
-    published: true,
-  },
-  {
-    name: "Riya Sharma",
-    role: "Brand Lead",
-    company: "D2C Skincare Brand",
-    quote:
-      "The buyer persona research gave us clear content angles, objections, and messaging gaps. It immediately improved how we briefed campaigns.",
-    image: null,
-    rating: 5,
-    sortOrder: 20,
-    published: true,
-  },
-];
-
 export async function getPublishedTestimonials(): Promise<DisplayTestimonial[]> {
   try {
     const rows = await prisma.testimonial.findMany({
       where: { published: true },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
     });
-
-    if (rows.length === 0) return fallbackTestimonials;
 
     return rows.map((t) => ({
       id: t.id,
@@ -58,6 +31,6 @@ export async function getPublishedTestimonials(): Promise<DisplayTestimonial[]> 
       published: t.published,
     }));
   } catch {
-    return fallbackTestimonials;
+    return [];
   }
 }
