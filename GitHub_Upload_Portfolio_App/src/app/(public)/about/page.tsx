@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Harshit Gupta - a marketer with 5+ years in business operations, brand strategy, and marketing. ICP research, GTM, positioning, analytics, and AI for marketing.",
+  alternates: { canonical: `${site.url}/about` },
 };
 
 const skills = [

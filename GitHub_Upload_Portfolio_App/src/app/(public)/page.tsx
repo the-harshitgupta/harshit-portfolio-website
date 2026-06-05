@@ -4,10 +4,13 @@ import Hero3D from "@/components/Hero3D";
 import Reveal from "@/components/Reveal";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
-import { works, processSteps, site } from "@/lib/site";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import { processSteps, site } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import { getPublishedServices } from "@/lib/services";
+import { getPublishedWork } from "@/lib/work";
+import { getPublishedTestimonials } from "@/lib/testimonials";
 
 export const revalidate = 60;
 
@@ -24,9 +27,11 @@ async function getLatestPosts() {
 }
 
 export default async function HomePage() {
-  const [posts, services] = await Promise.all([
+  const [posts, services, works, testimonials] = await Promise.all([
     getLatestPosts(),
     getPublishedServices(),
+    getPublishedWork(),
+    getPublishedTestimonials(),
   ]);
 
   return (
@@ -105,7 +110,10 @@ export default async function HomePage() {
           <div className="grid gap-6 md:grid-cols-3">
             {services.slice(0, 6).map((s, i) => (
               <Reveal key={s.title} delay={i * 60}>
-                <div className="card-base group h-full p-7 transition hover:-translate-y-1.5 hover:border-[#bfe0e0] hover:shadow-soft">
+                <Link
+                  href={`/services/${s.slug}`}
+                  className="card-base group block h-full p-7 transition hover:-translate-y-1.5 hover:border-[#bfe0e0] hover:shadow-soft"
+                >
                   <div className="mb-4 grid h-12 w-12 place-items-center rounded-[13px] bg-gradient-to-br from-teal to-teal-deep text-xl text-white">
                     {s.icon}
                   </div>
@@ -116,7 +124,7 @@ export default async function HomePage() {
                   <div className="mt-4 text-[0.92rem] font-bold text-navy">
                     {s.price}
                   </div>
-                </div>
+                </Link>
               </Reveal>
             ))}
           </div>
@@ -141,11 +149,10 @@ export default async function HomePage() {
               <Reveal key={w.title} delay={i * 60}>
                 <div className="card-base group h-full overflow-hidden transition hover:-translate-y-1.5 hover:shadow-soft">
                   <div className="aspect-[16/10] overflow-hidden border-b border-line bg-[#eef4f4]">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
                       src={w.image}
                       alt={w.title}
-                      width={520}
-                      height={325}
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     />
                   </div>
@@ -172,6 +179,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <TestimonialsSection testimonials={testimonials} />
 
       {/* PROCESS */}
       <section className="border-y border-line bg-white py-24">

@@ -5,6 +5,7 @@ import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
+import { site } from "@/lib/site";
 
 export const revalidate = 60;
 
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   title: "Blog - GTM, Positioning & Growth",
   description:
     "Practical articles on go-to-market strategy, ICP research, brand positioning, marketing analytics, and AI for marketing.",
+  alternates: { canonical: `${site.url}/blog` },
 };
 
 async function getData(category?: string) {

@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
-import { works } from "@/lib/site";
+import { getPublishedWork } from "@/lib/work";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Work & Case Samples",
   description:
     "Sample GTM, ICP, and brand strategy projects - B2B SaaS go-to-market, D2C buyer personas, and productized ICP research deliverables.",
+  alternates: { canonical: `${site.url}/work` },
 };
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const works = await getPublishedWork();
+
   return (
     <>
       <section className="py-20">
@@ -26,11 +29,10 @@ export default function WorkPage() {
               <Reveal key={w.title} delay={i * 60}>
                 <div className="card-base group h-full overflow-hidden transition hover:-translate-y-1.5 hover:shadow-soft">
                   <div className="aspect-[16/10] overflow-hidden border-b border-line bg-[#eef4f4]">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
                       src={w.image}
                       alt={w.title}
-                      width={520}
-                      height={325}
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     />
                   </div>

@@ -3,17 +3,23 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
-import { processSteps } from "@/lib/site";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import { processSteps, site } from "@/lib/site";
 import { getPublishedServices } from "@/lib/services";
+import { getPublishedTestimonials } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
   title: "Services & Pricing",
   description:
     "GTM strategy, ICP & buyer persona research, brand positioning, marketing analytics, and AI content strategy. Clear deliverables with INR and USD pricing.",
+  alternates: { canonical: `${site.url}/services` },
 };
 
 export default async function ServicesPage() {
-  const services = await getPublishedServices();
+  const [services, testimonials] = await Promise.all([
+    getPublishedServices(),
+    getPublishedTestimonials(),
+  ]);
 
   return (
     <>
@@ -49,10 +55,10 @@ export default async function ServicesPage() {
                     ))}
                   </ul>
                   <Link
-                    href={`/contact?need=${encodeURIComponent(s.title)}`}
+                    href={`/services/${s.slug}`}
                     className="btn btn-primary mt-6 self-start"
                   >
-                    Request this service
+                    View service details
                   </Link>
                 </div>
               </Reveal>
@@ -81,6 +87,8 @@ export default async function ServicesPage() {
           </div>
         </div>
       </section>
+
+      <TestimonialsSection testimonials={testimonials} />
 
       <CTASection />
     </>
