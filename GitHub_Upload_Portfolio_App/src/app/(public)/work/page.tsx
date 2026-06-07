@@ -20,6 +20,7 @@ export default async function WorkPage() {
       <section className="py-20">
         <div className="wrap">
           <SectionHead
+            as="h1"
             tag="Selected Work"
             title="Strategy projects & sample deliverables."
             subtitle="These are representative samples that show the structure and depth of my work: the problem, the research, the strategy, and the deliverable."
