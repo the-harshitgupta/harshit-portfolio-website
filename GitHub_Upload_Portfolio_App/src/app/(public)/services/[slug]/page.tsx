@@ -36,6 +36,11 @@ export async function generateMetadata({
       description: service.seoDescription || service.blurb,
       url,
       type: "website",
+      images: [`${site.url}/og/default.png`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [`${site.url}/og/default.png`],
     },
   };
 }

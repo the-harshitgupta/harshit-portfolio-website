@@ -26,6 +26,7 @@ export default async function ServicesPage() {
       <section className="py-20">
         <div className="wrap">
           <SectionHead
+            as="h1"
             tag="Services & Pricing"
             title="Pick the outcome you need next."
             subtitle="Productized engagements with clear scope, timelines, and pricing in INR and USD. Need something custom? Just ask in the contact form."
