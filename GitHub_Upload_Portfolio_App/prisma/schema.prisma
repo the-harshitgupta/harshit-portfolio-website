@@ -15,6 +15,9 @@ model Post {
   excerpt     String
   content     String
   coverImage  String?
+  seoTitle    String?
+  seoDescription String?
+  ogImage     String?
   category    String   @default("Marketing")
   tags        String   @default("")
   author      String   @default("Harshit Gupta")
