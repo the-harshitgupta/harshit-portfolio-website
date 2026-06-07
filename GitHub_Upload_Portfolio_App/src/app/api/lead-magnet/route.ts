@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { notifyLeadSubmitted } from "@/lib/lead-notifications";
 import { prisma } from "@/lib/prisma";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,6 +36,15 @@ export async function POST(req: Request) {
           "Downloaded the Free ICP Clarity Checklist. Follow up with workshop or audit invitation.",
         source: "icp-checklist",
       },
+    });
+    await notifyLeadSubmitted({
+      name,
+      email,
+      phone,
+      need: "Free ICP Clarity Checklist",
+      message:
+        "Downloaded the Free ICP Clarity Checklist. Follow up with workshop or audit invitation.",
+      source: "icp-checklist",
     });
 
     return NextResponse.json({ ok: true, downloadUrl: DOWNLOAD_URL });
