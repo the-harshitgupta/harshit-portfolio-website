@@ -56,3 +56,10 @@ export async function getPublishedWork(): Promise<DisplayWork[]> {
     return fallback();
   }
 }
+
+export async function getPublishedWorkBySlug(
+  slug: string
+): Promise<DisplayWork | null> {
+  const works = await getPublishedWork();
+  return works.find((work) => work.slug === slug) || null;
+}
