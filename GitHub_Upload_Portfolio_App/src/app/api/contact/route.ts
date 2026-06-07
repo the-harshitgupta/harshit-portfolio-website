@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { notifyLeadSubmitted } from "@/lib/lead-notifications";
 import { prisma } from "@/lib/prisma";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,6 +39,15 @@ export async function POST(req: Request) {
         message: message || null,
         source: "website",
       },
+    });
+    await notifyLeadSubmitted({
+      name,
+      email,
+      phone,
+      business: business || null,
+      need: need || null,
+      message: message || null,
+      source: "website",
     });
 
     return NextResponse.json({ ok: true });
