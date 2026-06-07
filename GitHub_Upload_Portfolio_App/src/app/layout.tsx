@@ -48,6 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${site.name} | ${site.role}`,
     description: site.description,
+    creator: "@theharshit05",
   },
   robots: { index: true, follow: true },
 };
@@ -65,7 +66,12 @@ export default function RootLayout({
     url: site.url,
     email: site.email,
     address: { "@type": "PostalAddress", addressLocality: site.location },
-    sameAs: [site.socials.linkedin, site.socials.instagram, site.socials.fiverr],
+    sameAs: [
+      site.socials.linkedin,
+      site.socials.x,
+      site.socials.instagram,
+      site.socials.fiverr,
+    ],
   };
   const serviceJsonLd = {
     "@context": "https://schema.org",
@@ -84,7 +90,12 @@ export default function RootLayout({
       "Marketing Analytics",
       "AI Marketing Strategy",
     ],
-    sameAs: [site.socials.linkedin, site.socials.instagram, site.socials.fiverr],
+    sameAs: [
+      site.socials.linkedin,
+      site.socials.x,
+      site.socials.instagram,
+      site.socials.fiverr,
+    ],
   };
 
   return (
