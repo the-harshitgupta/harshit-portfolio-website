@@ -35,7 +35,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.name }],
   creator: site.name,
-  alternates: { canonical: site.url },
+  alternates: {
+    canonical: site.url,
+    types: { "application/rss+xml": `${site.url}/rss.xml` },
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -43,12 +46,21 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} | ${site.role}`,
     description: site.description,
+    images: [
+      {
+        url: `${site.url}/og/default.png`,
+        width: 1200,
+        height: 630,
+        alt: `${site.name} | ${site.role}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} | ${site.role}`,
     description: site.description,
     creator: "@theharshit05",
+    images: [`${site.url}/og/default.png`],
   },
   robots: { index: true, follow: true },
 };
@@ -66,6 +78,26 @@ export default function RootLayout({
     url: site.url,
     email: site.email,
     address: { "@type": "PostalAddress", addressLocality: site.location },
+    sameAs: [
+      site.socials.linkedin,
+      site.socials.x,
+      site.socials.instagram,
+      site.socials.fiverr,
+    ],
+  };
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.name,
+    url: site.url,
+  };
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: site.name,
+    url: site.url,
+    logo: `${site.url}/brand-logo.svg`,
+    email: site.email,
     sameAs: [
       site.socials.linkedin,
       site.socials.x,
@@ -114,6 +146,14 @@ export default function RootLayout({
               gtag('config', 'G-KDYQFKEVV1');
             `,
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <script
           type="application/ld+json"
