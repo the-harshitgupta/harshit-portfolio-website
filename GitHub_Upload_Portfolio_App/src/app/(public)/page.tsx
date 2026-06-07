@@ -58,7 +58,7 @@ export default async function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3.5">
               <Link href="/contact" className="btn btn-primary">
-                Request a Free 3-Point Audit
+                Get My Free 3-Point Audit
               </Link>
               <Link href="/work" className="btn btn-ghost">
                 View Sample Work
