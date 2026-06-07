@@ -10,6 +10,9 @@ export type PostData = {
   excerpt: string;
   content: string;
   coverImage: string;
+  seoTitle: string;
+  seoDescription: string;
+  ogImage: string;
   category: string;
   tags: string;
   published: boolean;
@@ -22,6 +25,9 @@ const empty: PostData = {
   excerpt: "",
   content: "",
   coverImage: "",
+  seoTitle: "",
+  seoDescription: "",
+  ogImage: "",
   category: "Marketing",
   tags: "",
   published: true,
@@ -158,6 +164,47 @@ export default function PostEditor({ initial }: { initial?: PostData }) {
         onChange={(e) => set("coverImage", e.target.value)}
         placeholder="/work/portfolio_glow.png or https://..."
       />
+
+      <div className="mt-6 rounded-xl border border-line bg-cream p-5">
+        <div className="sec-tag mb-3">SEO Settings</div>
+        <p className="mb-4 text-sm text-muted">
+          Optional fields for Google and social previews. If blank, the site uses
+          the title, excerpt, and cover image.
+        </p>
+
+        <label className="label" htmlFor="seoTitle">
+          SEO title (optional)
+        </label>
+        <input
+          id="seoTitle"
+          className="field"
+          value={data.seoTitle}
+          onChange={(e) => set("seoTitle", e.target.value)}
+          placeholder="Best keyword-focused title, around 50-60 characters"
+        />
+
+        <label className="label" htmlFor="seoDescription">
+          SEO description (optional)
+        </label>
+        <textarea
+          id="seoDescription"
+          className="field min-h-[76px] resize-y"
+          value={data.seoDescription}
+          onChange={(e) => set("seoDescription", e.target.value)}
+          placeholder="Meta description, around 140-160 characters"
+        />
+
+        <label className="label" htmlFor="ogImage">
+          Social preview image URL (optional)
+        </label>
+        <input
+          id="ogImage"
+          className="field"
+          value={data.ogImage}
+          onChange={(e) => set("ogImage", e.target.value)}
+          placeholder="/blog/your-cover.png or https://..."
+        />
+      </div>
 
       <label className="label" htmlFor="content">
         Content (Markdown supported)

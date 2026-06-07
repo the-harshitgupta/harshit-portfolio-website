@@ -102,7 +102,12 @@ export default function Footer() {
           <span>
             &copy; {year} {site.name} &middot; {site.role}
           </span>
-          <span>{site.location}</span>
+          <span className="flex flex-wrap items-center justify-center gap-3">
+            <span>{site.location}</span>
+            <Link href="/privacy" className="hover:text-teal-deep">
+              Privacy Policy
+            </Link>
+          </span>
         </div>
       </div>
     </footer>

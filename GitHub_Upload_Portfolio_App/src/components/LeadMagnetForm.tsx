@@ -33,6 +33,14 @@ export default function LeadMagnetForm({
         throw new Error(j.error || "Something went wrong");
       }
       setStatus("ok");
+      (
+        window as typeof window & {
+          gtag?: (command: string, eventName: string, params?: object) => void;
+        }
+      ).gtag?.("event", "checklist_download", {
+        event_category: "Lead magnet",
+        event_label: "ICP checklist",
+      });
       form.reset();
     } catch (err) {
       setStatus("error");
@@ -42,7 +50,7 @@ export default function LeadMagnetForm({
 
   if (status === "ok") {
     return (
-      <div className="card-base bg-white p-7">
+      <div className="card-base bg-white p-7" role="status" aria-live="polite">
         <div className="sec-tag">Checklist ready</div>
         <h3 className="mt-2 font-serif text-2xl font-bold text-navy">
           Your ICP checklist is ready.
@@ -127,7 +135,10 @@ export default function LeadMagnetForm({
       />
 
       {status === "error" && (
-        <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+        <p
+          className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600"
+          role="alert"
+        >
           {error}
         </p>
       )}

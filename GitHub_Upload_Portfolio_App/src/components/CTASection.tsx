@@ -19,7 +19,7 @@ export default function CTASection() {
               href="/contact"
               className="btn bg-white text-navy hover:-translate-y-0.5"
             >
-              Request a Free Audit
+              Get My Free 3-Point Audit
             </Link>
             <Link
               href="/work"

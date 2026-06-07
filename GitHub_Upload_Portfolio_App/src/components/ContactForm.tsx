@@ -31,6 +31,14 @@ export default function ContactForm({
         throw new Error(j.error || "Something went wrong");
       }
       setStatus("ok");
+      (
+        window as typeof window & {
+          gtag?: (command: string, eventName: string, params?: object) => void;
+        }
+      ).gtag?.("event", "lead_submit", {
+        event_category: "Lead",
+        event_label: "Contact form",
+      });
       form.reset();
     } catch (err) {
       setStatus("error");
@@ -40,7 +48,7 @@ export default function ContactForm({
 
   if (status === "ok") {
     return (
-      <div className="card-base bg-white p-8 text-center">
+      <div className="card-base bg-white p-8 text-center" role="status" aria-live="polite">
         <div className="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-full bg-teal-soft text-2xl text-teal-deep">
           &#10003;
         </div>
@@ -151,7 +159,10 @@ export default function ContactForm({
       />
 
       {status === "error" && (
-        <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+        <p
+          className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600"
+          role="alert"
+        >
           {error}
         </p>
       )}

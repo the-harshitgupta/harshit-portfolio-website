@@ -49,7 +49,10 @@ export default function Nav() {
         </nav>
 
         <button
-          aria-label="Toggle menu"
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-controls="mobile-menu"
+          aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
           className="text-2xl text-navy md:hidden"
         >
@@ -58,7 +61,10 @@ export default function Nav() {
       </div>
 
       {open && (
-        <nav className="flex flex-col border-b border-line bg-white py-2 shadow-soft md:hidden">
+        <nav
+          id="mobile-menu"
+          className="flex flex-col border-b border-line bg-white py-2 shadow-soft md:hidden"
+        >
           {nav.map((n) => (
             <Link
               key={n.href}
