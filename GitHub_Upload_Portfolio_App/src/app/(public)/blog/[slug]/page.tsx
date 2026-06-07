@@ -8,6 +8,27 @@ import { site } from "@/lib/site";
 
 export const revalidate = 60;
 
+const DEFAULT_OG = `${site.url}/og/default.png`;
+
+// Cover images may be stored as a relative path ("/blog/x.png") or a full URL
+// ("https://..."). Only prepend the site URL when it is relative.
+function toAbsoluteUrl(src?: string | null) {
+  if (!src) return undefined;
+  return src.startsWith("http") ? src : `${site.url}${src}`;
+}
+
+export async function generateStaticParams() {
+  try {
+    const posts = await prisma.post.findMany({
+      where: { published: true },
+      select: { slug: true },
+    });
+    return posts.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
+}
+
 async function getPost(slug: string) {
   try {
     return await prisma.post.findFirst({
@@ -25,6 +46,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const post = await getPost(params.slug);
   if (!post) return { title: "Post not found" };
+  const ogImage = toAbsoluteUrl(post.coverImage) || DEFAULT_OG;
   return {
     title: post.title,
     description: post.excerpt,
@@ -34,10 +56,12 @@ export async function generateMetadata({
       title: post.title,
       description: post.excerpt,
       url: `${site.url}/blog/${post.slug}`,
-      images: post.coverImage ? [post.coverImage] : undefined,
+      images: [ogImage],
       publishedTime: post.createdAt.toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
       authors: [post.author],
     },
+    twitter: { card: "summary_large_image", images: [ogImage] },
   };
 }
 
@@ -60,7 +84,7 @@ export default async function PostPage({
     author: { "@type": "Person", name: post.author },
     datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
-    image: post.coverImage ? `${site.url}${post.coverImage}` : undefined,
+    image: toAbsoluteUrl(post.coverImage) || DEFAULT_OG,
     mainEntityOfPage: `${site.url}/blog/${post.slug}`,
   };
   const breadcrumbJsonLd = {
@@ -146,7 +170,7 @@ export default async function PostPage({
               Get a free 3-point audit and a clear next step for your marketing.
             </p>
             <Link href="/contact" className="btn btn-primary mt-5">
-              Request a Free Audit
+              Get My Free 3-Point Audit
             </Link>
           </div>
         </div>

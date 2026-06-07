@@ -49,6 +49,7 @@ export default async function BlogPage({
       <section className="py-20">
         <div className="wrap">
           <SectionHead
+            as="h1"
             tag="Blog"
             title="Ideas on GTM, positioning & growth."
             subtitle="Practical marketing thinking for founders, operators, and D2C teams - no fluff."
@@ -84,7 +85,7 @@ export default async function BlogPage({
                 and let&apos;s talk about your marketing.
               </p>
               <Link href="/contact" className="btn btn-primary mt-5">
-                Request a Free Audit
+                Get My Free 3-Point Audit
               </Link>
             </div>
           ) : (
