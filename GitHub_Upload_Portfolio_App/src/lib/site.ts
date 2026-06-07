@@ -10,6 +10,7 @@ export const site = {
   location: "New Delhi, India",
   socials: {
     linkedin: "https://www.linkedin.com/in/the-harshitgupta",
+    x: "https://x.com/theharshit05",
     instagram: "https://www.instagram.com/theharshitgupta.ai",
     fiverr: "https://www.fiverr.com/h_growth",
     youtube: "#",
