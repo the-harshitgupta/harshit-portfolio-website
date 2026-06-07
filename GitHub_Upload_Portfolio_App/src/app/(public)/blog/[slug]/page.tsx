@@ -11,6 +11,16 @@ export const revalidate = 60;
 
 const DEFAULT_OG = `${site.url}/og/default.png`;
 
+type PostSeoFields = {
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  ogImage?: string | null;
+};
+
+function withSeoFields<T extends object>(post: T): T & PostSeoFields {
+  return post as T & PostSeoFields;
+}
+
 // Cover images may be stored as a relative path ("/blog/x.png") or a full URL
 // ("https://..."). Only prepend the site URL when it is relative.
 function toAbsoluteUrl(src?: string | null) {
@@ -61,8 +71,9 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const post = await getPost(params.slug);
-  if (!post) return { title: "Post not found" };
+  const rawPost = await getPost(params.slug);
+  if (!rawPost) return { title: "Post not found" };
+  const post = withSeoFields(rawPost);
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt;
   const ogImage = toAbsoluteUrl(post.ogImage || post.coverImage) || DEFAULT_OG;
@@ -89,8 +100,9 @@ export default async function PostPage({
 }: {
   params: { slug: string };
 }) {
-  const post = await getPost(params.slug);
-  if (!post) notFound();
+  const rawPost = await getPost(params.slug);
+  if (!rawPost) notFound();
+  const post = withSeoFields(rawPost);
 
   const html = renderMarkdown(post.content);
   const tags = tagList(post.tags);
