@@ -4,13 +4,20 @@ import PostEditor from "@/components/admin/PostEditor";
 
 export const dynamic = "force-dynamic";
 
+type PostSeoFields = {
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  ogImage?: string | null;
+};
+
 export default async function EditPostPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const post = await prisma.post.findUnique({ where: { id: params.id } });
-  if (!post) notFound();
+  const rawPost = await prisma.post.findUnique({ where: { id: params.id } });
+  if (!rawPost) notFound();
+  const post = rawPost as typeof rawPost & PostSeoFields;
 
   return (
     <div>
