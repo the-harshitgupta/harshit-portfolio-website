@@ -52,6 +52,16 @@ export default function Footer() {
             </li>
             <li>
               <a
+                href={site.socials.x}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-teal-deep"
+              >
+                X
+              </a>
+            </li>
+            <li>
+              <a
                 href={site.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
