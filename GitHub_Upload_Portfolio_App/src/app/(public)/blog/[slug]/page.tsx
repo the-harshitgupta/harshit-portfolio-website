@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import BlogCard from "@/components/BlogCard";
 import CTASection from "@/components/CTASection";
 import { prisma } from "@/lib/prisma";
-import { renderMarkdown, formatDate, tagList } from "@/lib/utils";
+import { renderMarkdown, formatDate, slugify, tagList } from "@/lib/utils";
 import { site } from "@/lib/site";
 
 export const revalidate = 60;
@@ -39,6 +40,22 @@ async function getPost(slug: string) {
   }
 }
 
+async function getRelatedPosts(category: string, currentId: string) {
+  try {
+    return await prisma.post.findMany({
+      where: {
+        published: true,
+        category,
+        NOT: { id: currentId },
+      },
+      orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
+      take: 3,
+    });
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -46,15 +63,17 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const post = await getPost(params.slug);
   if (!post) return { title: "Post not found" };
-  const ogImage = toAbsoluteUrl(post.coverImage) || DEFAULT_OG;
+  const title = post.seoTitle || post.title;
+  const description = post.seoDescription || post.excerpt;
+  const ogImage = toAbsoluteUrl(post.ogImage || post.coverImage) || DEFAULT_OG;
   return {
-    title: post.title,
-    description: post.excerpt,
+    title,
+    description,
     alternates: { canonical: `${site.url}/blog/${post.slug}` },
     openGraph: {
       type: "article",
-      title: post.title,
-      description: post.excerpt,
+      title,
+      description,
       url: `${site.url}/blog/${post.slug}`,
       images: [ogImage],
       publishedTime: post.createdAt.toISOString(),
@@ -75,16 +94,17 @@ export default async function PostPage({
 
   const html = renderMarkdown(post.content);
   const tags = tagList(post.tags);
+  const relatedPosts = await getRelatedPosts(post.category, post.id);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
+    headline: post.seoTitle || post.title,
+    description: post.seoDescription || post.excerpt,
     author: { "@type": "Person", name: post.author },
     datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
-    image: toAbsoluteUrl(post.coverImage) || DEFAULT_OG,
+    image: toAbsoluteUrl(post.ogImage || post.coverImage) || DEFAULT_OG,
     mainEntityOfPage: `${site.url}/blog/${post.slug}`,
   };
   const breadcrumbJsonLd = {
@@ -132,8 +152,13 @@ export default async function PostPage({
           </Link>
 
           <div className="mt-6 text-[0.78rem] font-bold uppercase tracking-wide text-teal-deep">
-            {post.category} &middot; {post.readMinutes} min read &middot;{" "}
-            {formatDate(post.createdAt)}
+            <Link
+              href={`/blog/category/${slugify(post.category)}`}
+              className="hover:underline"
+            >
+              {post.category}
+            </Link>{" "}
+            &middot; {post.readMinutes} min read &middot; {formatDate(post.createdAt)}
           </div>
           <h1 className="mt-3 font-serif text-[clamp(1.9rem,4vw,2.9rem)] font-bold leading-tight tracking-tight">
             {post.title}
@@ -152,12 +177,30 @@ export default async function PostPage({
             dangerouslySetInnerHTML={{ __html: html }}
           />
 
+          <div className="card-base mt-10 bg-teal-soft p-7">
+            <div className="sec-tag">Free Resource</div>
+            <h2 className="mt-2 font-serif text-2xl font-bold text-navy">
+              Want clearer customers before your next campaign?
+            </h2>
+            <p className="mt-2 max-w-xl text-muted">
+              Download the free ICP Clarity Checklist and turn broad audience
+              guesses into sharper messaging, content, and targeting.
+            </p>
+            <Link href="/resources/icp-checklist" className="btn btn-primary mt-5">
+              Download the Free ICP Checklist
+            </Link>
+          </div>
+
           {tags.length > 0 && (
             <div className="mt-10 flex flex-wrap gap-2.5 border-t border-line pt-6">
               {tags.map((t) => (
-                <span key={t} className="pill">
+                <Link
+                  key={t}
+                  href={`/blog?tag=${encodeURIComponent(t)}`}
+                  className="pill hover:border-teal-deep hover:text-teal-deep"
+                >
                   #{t}
-                </span>
+                </Link>
               ))}
             </div>
           )}
@@ -175,6 +218,24 @@ export default async function PostPage({
           </div>
         </div>
       </article>
+
+      {relatedPosts.length > 0 && (
+        <section className="border-t border-line bg-white py-16">
+          <div className="wrap">
+            <div className="mb-8 max-w-2xl">
+              <div className="sec-tag">Related Reading</div>
+              <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                Keep building your GTM clarity.
+              </h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {relatedPosts.map((related, i) => (
+                <BlogCard key={related.id} post={related} delay={(i % 3) * 60} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <CTASection />
     </>

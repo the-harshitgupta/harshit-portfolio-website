@@ -5,9 +5,9 @@ import Reveal from "@/components/Reveal";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "ICP & Positioning Workshop",
+  title: "ICP & Positioning Workshop Waitlist",
   description:
-    "Join a beginner-friendly 90-minute ICP and positioning workshop to find your best customers, write a clearer message, and plan your next marketing actions.",
+    "Join the waitlist for a beginner-friendly ICP and positioning workshop to find your best customers, write a clearer message, and plan your next marketing actions.",
   alternates: { canonical: `${site.url}/workshop` },
 };
 
@@ -69,18 +69,16 @@ const socialIdeas = [
 export default function WorkshopPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Event",
-    name: "Find Your Best Customers: ICP & Positioning Workshop",
+    "@type": "WebPage",
+    name: "ICP & Positioning Workshop Waitlist",
     description: metadata.description,
-    eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-    organizer: { "@type": "Person", name: site.name, url: site.url },
     url: `${site.url}/workshop`,
-    offers: {
-      "@type": "Offer",
-      price: "999",
-      priceCurrency: "INR",
-      availability: "https://schema.org/PreOrder",
+    about: {
+      "@type": "Course",
+      name: "Find Your Best Customers: ICP & Positioning Workshop",
+      description:
+        "A beginner-friendly workshop concept for ICP research, buyer personas, positioning, and marketing action planning.",
+      provider: { "@type": "Person", name: site.name, url: site.url },
     },
   };
 
@@ -93,14 +91,14 @@ export default function WorkshopPage() {
       <section className="py-16">
         <div className="wrap grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <Reveal>
-            <div className="sec-tag">Live Workshop</div>
+            <div className="sec-tag">Workshop Waitlist</div>
             <h1 className="mt-3 font-serif text-[clamp(2.1rem,4.8vw,3.5rem)] font-bold leading-tight tracking-tight">
-              Find Your Best Customers: ICP & Positioning Workshop
+              Join the ICP & Positioning Workshop Waitlist
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-muted">
-              A beginner-friendly 90-minute session for founders, freelancers,
-              consultants, and small business owners who want clearer targeting,
-              sharper messaging, and better leads.
+              I am validating the first beginner-friendly cohort for founders,
+              freelancers, consultants, and small business owners who want clearer
+              targeting, sharper messaging, and better leads.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
@@ -117,15 +115,15 @@ export default function WorkshopPage() {
 
           <Reveal delay={100}>
             <div className="card-base bg-white p-7">
-              <div className="sec-tag">First batch plan</div>
+              <div className="sec-tag">Waitlist plan</div>
               <h2 className="mt-2 font-serif text-2xl font-bold text-navy">
-                Start small. Validate demand.
+                No fixed date yet. Demand first.
               </h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-3">
                 {[
                   ["Length", "90 minutes"],
-                  ["First price", "Rs.999"],
-                  ["Format", "Live online"],
+                  ["Expected price", "Rs.999"],
+                  ["Format", "Live online cohort"],
                 ].map(([label, value]) => (
                   <div key={label} className="rounded-xl bg-cream p-4">
                     <div className="text-xs font-bold uppercase tracking-wide text-teal-deep">
@@ -136,9 +134,9 @@ export default function WorkshopPage() {
                 ))}
               </div>
               <p className="mt-5 text-sm text-muted">
-                The first version should be live, not recorded. You will learn
-                what people ask, what they struggle with, and what they are
-                willing to buy next.
+                Joining the waitlist helps me confirm demand before announcing
+                the final date. If enough people join, I will share the date,
+                price, and payment link by email.
               </p>
             </div>
           </Reveal>
@@ -149,7 +147,7 @@ export default function WorkshopPage() {
         <div className="wrap">
           <div className="sec-tag">Workshop Content</div>
           <h2 className="mt-3 font-serif text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold leading-tight tracking-tight">
-            What you will explain in the 90-minute workshop.
+            What the 90-minute workshop will cover.
           </h2>
           <div className="mt-10 grid gap-5 md:grid-cols-2">
             {agenda.map((item, i) => (
@@ -174,7 +172,7 @@ export default function WorkshopPage() {
           <Reveal>
             <div className="sec-tag">Deliverables</div>
             <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
-              What people get from the paid workshop.
+              What waitlist members can expect.
             </h2>
             <ul className="mt-6 space-y-3 text-muted">
               {deliverables.map((item) => (

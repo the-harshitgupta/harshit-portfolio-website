@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
@@ -45,14 +46,12 @@ export default async function WorkPage() {
                       {w.title}
                     </h3>
                     <p className="mt-2 text-[0.9rem] text-muted">{w.desc}</p>
-                    <a
-                      href={w.href}
-                      target={w.href.endsWith(".pdf") ? "_blank" : undefined}
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/work/${w.slug}`}
                       className="mt-3.5 inline-flex items-center gap-1.5 text-[0.88rem] font-semibold text-navy hover:text-teal-deep"
                     >
-                      {w.cta} &#8594;
-                    </a>
+                      View case study &#8594;
+                    </Link>
                   </div>
                 </div>
               </Reveal>

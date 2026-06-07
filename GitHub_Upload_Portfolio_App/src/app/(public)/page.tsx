@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import Hero3D from "@/components/Hero3D";
+import LazyHero3D from "@/components/LazyHero3D";
 import Reveal from "@/components/Reveal";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
@@ -39,7 +39,7 @@ export default async function HomePage() {
     <>
       {/* HERO */}
       <section className="relative flex min-h-[calc(100vh-72px)] items-center overflow-hidden">
-        <Hero3D />
+        <LazyHero3D />
         <div className="wrap relative z-10 grid items-center gap-10 py-16 md:grid-cols-[1.15fr_0.85fr]">
           <div>
             <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#cfeaea] bg-teal-soft px-4 py-1.5 text-[0.8rem] font-semibold text-teal-deep">
@@ -193,14 +193,12 @@ export default async function HomePage() {
                       {w.title}
                     </h3>
                     <p className="mt-2 text-[0.9rem] text-muted">{w.desc}</p>
-                    <a
-                      href={w.href}
-                      target={w.href.endsWith(".pdf") ? "_blank" : undefined}
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/work/${w.slug}`}
                       className="mt-3.5 inline-flex items-center gap-1.5 text-[0.88rem] font-semibold text-navy hover:text-teal-deep"
                     >
-                      {w.cta} &#8594;
-                    </a>
+                      View case study &#8594;
+                    </Link>
                   </div>
                 </div>
               </Reveal>

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Reveal from "@/components/Reveal";
+import BlogCard from "@/components/BlogCard";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
 import { prisma } from "@/lib/prisma";
-import { formatDate } from "@/lib/utils";
+import { slugify } from "@/lib/utils";
 import { site } from "@/lib/site";
 
 export const revalidate = 60;
@@ -16,12 +16,13 @@ export const metadata: Metadata = {
   alternates: { canonical: `${site.url}/blog` },
 };
 
-async function getData(category?: string) {
+async function getData(category?: string, tag?: string) {
   try {
     const posts = await prisma.post.findMany({
       where: {
         published: true,
         ...(category && category !== "All" ? { category } : {}),
+        ...(tag ? { tags: { contains: tag, mode: "insensitive" } } : {}),
       },
       orderBy: { createdAt: "desc" },
     });
@@ -39,10 +40,11 @@ async function getData(category?: string) {
 export default async function BlogPage({
   searchParams,
 }: {
-  searchParams: { category?: string };
+  searchParams: { category?: string; tag?: string };
 }) {
   const active = searchParams.category || "All";
-  const { posts, categories } = await getData(active);
+  const activeTag = searchParams.tag || "";
+  const { posts, categories } = await getData(active, activeTag);
 
   return (
     <>
@@ -61,7 +63,7 @@ export default async function BlogPage({
                 <Link
                   key={c}
                   href={
-                    c === "All" ? "/blog" : `/blog?category=${encodeURIComponent(c)}`
+                    c === "All" ? "/blog" : `/blog/category/${slugify(c)}`
                   }
                   className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
                     active === c
@@ -72,6 +74,16 @@ export default async function BlogPage({
                   {c}
                 </Link>
               ))}
+            </div>
+          )}
+
+          {activeTag && (
+            <div className="mb-8 rounded-xl border border-line bg-white p-4 text-sm text-muted">
+              Showing posts tagged{" "}
+              <span className="font-bold text-navy">#{activeTag}</span>.{" "}
+              <Link href="/blog" className="font-semibold text-teal-deep hover:underline">
+                Clear filter
+              </Link>
             </div>
           )}
 
@@ -91,37 +103,7 @@ export default async function BlogPage({
           ) : (
             <div className="grid gap-6 md:grid-cols-3">
               {posts.map((post, i) => (
-                <Reveal key={post.id} delay={(i % 3) * 60}>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="card-base group flex h-full flex-col overflow-hidden transition hover:-translate-y-1.5 hover:shadow-soft"
-                  >
-                    {post.coverImage && (
-                      <div className="aspect-[16/9] overflow-hidden border-b border-line bg-[#eef4f4]">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={post.coverImage}
-                          alt={post.title}
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                    )}
-                    <div className="flex flex-1 flex-col p-6">
-                      <div className="text-[0.74rem] font-bold uppercase tracking-wide text-teal-deep">
-                        {post.category} &middot; {post.readMinutes} min
-                      </div>
-                      <h2 className="mt-2 font-serif text-[1.15rem] font-semibold">
-                        {post.title}
-                      </h2>
-                      <p className="mt-2 flex-1 text-[0.9rem] text-muted">
-                        {post.excerpt}
-                      </p>
-                      <span className="mt-4 text-xs text-muted">
-                        {formatDate(post.createdAt)}
-                      </span>
-                    </div>
-                  </Link>
-                </Reveal>
+                <BlogCard key={post.id} post={post} delay={(i % 3) * 60} />
               ))}
             </div>
           )}
