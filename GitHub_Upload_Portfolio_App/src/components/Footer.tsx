@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { nav, site } from "@/lib/site";
+import { nav, resourceLinks, site } from "@/lib/site";
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="mt-24 border-t border-line bg-white">
-      <div className="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <div className="font-serif text-xl font-extrabold">
             Harshit<span className="text-teal-deep">.</span>Gupta
@@ -15,7 +15,7 @@ export default function Footer() {
             unclear marketing into a focused customer strategy.
           </p>
           <Link href="/contact" className="btn btn-primary mt-5">
-            Request a Free Audit
+            Get My Free 3-Point Audit
           </Link>
         </div>
 
@@ -26,6 +26,19 @@ export default function Footer() {
               <li key={n.href}>
                 <Link href={n.href} className="hover:text-teal-deep">
                   {n.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <div className="sec-tag mb-3">Resources</div>
+          <ul className="space-y-2 text-sm text-muted">
+            {resourceLinks.map((r) => (
+              <li key={r.href}>
+                <Link href={r.href} className="hover:text-teal-deep">
+                  {r.label}
                 </Link>
               </li>
             ))}

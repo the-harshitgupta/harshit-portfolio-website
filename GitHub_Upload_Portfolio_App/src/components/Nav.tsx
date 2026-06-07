@@ -43,8 +43,8 @@ export default function Nav() {
               {n.label}
             </Link>
           ))}
-          <Link href="/contact" className="btn btn-primary">
-            Get a Free Audit
+          <Link href="/contact" className="btn btn-primary whitespace-nowrap">
+            Get My Free 3-Point Audit
           </Link>
         </nav>
 
@@ -74,7 +74,7 @@ export default function Nav() {
             onClick={() => setOpen(false)}
             className="btn btn-primary mx-6 my-2.5"
           >
-            Get a Free Audit
+            Get My Free 3-Point Audit
           </Link>
         </nav>
       )}
