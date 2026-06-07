@@ -26,9 +26,7 @@ export async function PUT(
     });
     if (clash) slug = `${slug}-${Date.now().toString().slice(-5)}`;
 
-    const post = await prisma.post.update({
-      where: { id: params.id },
-      data: {
+    const data = {
         title,
         slug,
         excerpt: String(b.excerpt || "").trim() || content.slice(0, 150),
@@ -42,7 +40,11 @@ export async function PUT(
         published: Boolean(b.published),
         featured: Boolean(b.featured),
         readMinutes: estimateReadMinutes(content),
-      },
+      };
+
+    const post = await prisma.post.update({
+      where: { id: params.id },
+      data: data as any,
     });
     return NextResponse.json({ ok: true, slug: post.slug });
   } catch (err) {

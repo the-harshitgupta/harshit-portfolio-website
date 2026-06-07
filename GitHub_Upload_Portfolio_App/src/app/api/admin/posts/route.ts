@@ -22,8 +22,7 @@ export async function POST(req: Request) {
     const existing = await prisma.post.findUnique({ where: { slug } });
     if (existing) slug = `${slug}-${Date.now().toString().slice(-5)}`;
 
-    const post = await prisma.post.create({
-      data: {
+    const data = {
         title,
         slug,
         excerpt: String(b.excerpt || "").trim() || content.slice(0, 150),
@@ -37,7 +36,10 @@ export async function POST(req: Request) {
         published: Boolean(b.published),
         featured: Boolean(b.featured),
         readMinutes: estimateReadMinutes(content),
-      },
+      };
+
+    const post = await prisma.post.create({
+      data: data as any,
     });
     return NextResponse.json({ ok: true, id: post.id, slug: post.slug });
   } catch (err) {
