@@ -13,7 +13,6 @@ export const site = {
     x: "https://x.com/theharshit05",
     instagram: "https://www.instagram.com/theharshitgupta.ai",
     fiverr: "https://www.fiverr.com/h_growth",
-    youtube: "#",
   },
 };
 
@@ -23,6 +22,12 @@ export const nav = [
   { label: "Work", href: "/work" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
+];
+
+// Funnel resources surfaced in the footer so visitors can discover them.
+export const resourceLinks = [
+  { label: "Free ICP Checklist", href: "/resources/icp-checklist" },
+  { label: "ICP & Positioning Workshop", href: "/workshop" },
 ];
 
 // Rupee sign via escape to keep source ASCII-safe.
@@ -189,5 +194,6 @@ export const needOptions = [
   "Founder Growth Playbook",
   "Marketing Analytics & KPIs",
   "AI Content Strategy System",
+  "ICP & Positioning Workshop",
   "Not sure yet",
 ];
