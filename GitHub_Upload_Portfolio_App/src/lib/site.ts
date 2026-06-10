@@ -44,30 +44,44 @@ export type Service = {
 export const services: Service[] = [
   {
     icon: "\u25C9",
-    title: "ICP & Buyer Persona Research",
+    title: "ICP & Positioning Audit",
     blurb:
-      "Know exactly who to target, what they care about, why they buy, and how to message them, from reviews, competitors, and AI-assisted analysis.",
-    price: `From ${RS}4,999 / $79`,
+      "Start here. A fast, outside-expert review of your customer, offer, and message, with a clear list of exactly what to fix first. Fully credited toward the GTM Clarity Sprint if you upgrade within 14 days.",
+    price: `From ${RS}7,500 / $99`,
     bullets: [
-      "1-3 detailed buyer personas",
-      "Pains, triggers & objections",
-      "Competitor messaging gaps",
-      "Customer-language messaging angles",
-      "Channel & targeting recommendations",
+      "1-page action sheet (ideal customer + #1 gap)",
+      "10-15 min Loom walkthrough of your site/offer",
+      "Rewritten headline + one key section",
+      "3-5 prioritized, do-able fixes",
+      "Credited toward the Sprint if you upgrade",
     ],
   },
   {
     icon: "\u25B2",
     title: "GTM Clarity Sprint",
     blurb:
-      "ICP, positioning, competitor scan, offer messaging, and a 30-day content & campaign roadmap, delivered in days.",
-    price: `From ${RS}14,999 / $249`,
+      "My flagship. A 2-3 week guided sprint that locks your ICP, positioning, and messaging, and hands you a 30-day go-to-market + content plan, so every rupee you spend after works harder.",
+    price: `From ${RS}50,000 / $699`,
     bullets: [
-      "ICP + positioning statement",
-      "Competitor scan",
-      "Offer & messaging framework",
-      "30-day campaign roadmap",
-      "Channel priority plan",
+      "ICP + buyer persona document",
+      "Positioning statement + value proposition",
+      "Homepage + core messaging rewrite",
+      "30-day GTM + content roadmap",
+      "2 calls (kickoff + handover) + async support",
+    ],
+  },
+  {
+    icon: "\u25C6",
+    title: "Advisory Retainer",
+    blurb:
+      "Ongoing GTM & positioning direction so your message stays sharp and your pipeline stays warm, month after month. The natural next step after a Sprint.",
+    price: `${RS}35,000 / mo \u00b7 $449`,
+    bullets: [
+      "2 strategy calls per month",
+      "Monthly GTM & content direction",
+      "Async review of pages, offers & posts",
+      "A monthly 1-page action plan",
+      "Cancel anytime (7 days' notice)",
     ],
   },
   {
@@ -75,7 +89,7 @@ export const services: Service[] = [
     title: "Brand Positioning Rewrite",
     blurb:
       "A sharper one-line positioning, homepage hero rewrite, offer messaging, and clear differentiation buyers understand fast.",
-    price: `From ${RS}4,999 / $79`,
+    price: `From ${RS}14,999 / $249`,
     bullets: [
       "One-line positioning",
       "Homepage hero rewrite",
@@ -85,25 +99,11 @@ export const services: Service[] = [
     ],
   },
   {
-    icon: "\u25C6",
-    title: "Founder Growth Playbook",
-    blurb:
-      "ICP deck, funnel map, content pillars, KPI dashboard structure, and complete marketing direction before you hire or scale.",
-    price: `From ${RS}39,999 / $699`,
-    bullets: [
-      "ICP & persona deck",
-      "Full funnel map",
-      "Content pillar system",
-      "KPI dashboard structure",
-      "90-day execution plan",
-    ],
-  },
-  {
     icon: "\u25D4",
     title: "Marketing Analytics & KPIs",
     blurb:
       "A simple KPI framework and dashboard so you track leads, conversion, and growth, not vanity metrics.",
-    price: `From ${RS}6,999 / $120`,
+    price: `From ${RS}9,999 / $150`,
     bullets: [
       "KPI framework",
       "Dashboard structure (Power BI/Sheets)",
@@ -117,7 +117,7 @@ export const services: Service[] = [
     title: "AI Content Strategy System",
     blurb:
       "Content pillars, a 30-day calendar, a hook bank, and an AI-assisted repurposing workflow tied to leads.",
-    price: `From ${RS}9,999 / $150`,
+    price: `From ${RS}14,999 / $249`,
     bullets: [
       "5 content pillars",
       "30-day content calendar",
@@ -188,10 +188,10 @@ export const processSteps = [
 ];
 
 export const needOptions = [
-  "ICP & Buyer Persona Research",
+  "ICP & Positioning Audit",
   "GTM Clarity Sprint",
+  "Advisory Retainer",
   "Brand Positioning Rewrite",
-  "Founder Growth Playbook",
   "Marketing Analytics & KPIs",
   "AI Content Strategy System",
   "ICP & Positioning Workshop",
