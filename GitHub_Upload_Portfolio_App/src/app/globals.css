@@ -106,7 +106,23 @@ body {
   @apply rounded bg-[#eef4f4] px-1.5 py-0.5 text-[0.92em] text-teal-deep;
 }
 .prose-blog img {
-  @apply my-6 rounded-xl border border-line;
+  @apply mx-auto my-6 block h-auto w-full rounded-xl border border-line;
+}
+.prose-blog table {
+  @apply my-7 w-full border-collapse text-left text-[0.95rem];
+}
+.prose-blog th,
+.prose-blog td {
+  @apply border border-line px-3.5 py-2.5 align-top;
+}
+.prose-blog thead th {
+  @apply bg-navy text-[0.78rem] font-bold uppercase tracking-wide text-white;
+}
+.prose-blog tbody tr:nth-child(even) td {
+  @apply bg-[#f7fafa];
+}
+.prose-blog td:first-child {
+  @apply font-semibold text-ink;
 }
 
 /* reveal */
