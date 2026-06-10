@@ -32,9 +32,20 @@ export default async function ServicesPage() {
             subtitle="Productized engagements with clear scope, timelines, and pricing in INR and USD. Need something custom? Just ask in the contact form."
           />
           <div className="grid gap-6 md:grid-cols-2">
-            {services.map((s, i) => (
+            {services.map((s, i) => {
+              const isHero = /audit/i.test(s.slug) || /audit/i.test(s.title);
+              return (
               <Reveal key={s.title} delay={(i % 2) * 60}>
-                <div className="card-base flex h-full flex-col p-8">
+                <div
+                  className={`card-base flex h-full flex-col p-8 ${
+                    isHero ? "relative ring-2 ring-teal" : ""
+                  }`}
+                >
+                  {isHero && (
+                    <span className="absolute -top-3 left-6 rounded-full bg-teal-deep px-3 py-1 text-[0.7rem] font-bold uppercase tracking-wide text-white shadow">
+                      Start here
+                    </span>
+                  )}
                   <div className="flex items-start justify-between gap-4">
                     <div className="grid h-12 w-12 place-items-center rounded-[13px] bg-gradient-to-br from-teal to-teal-deep text-xl text-white">
                       {s.icon}
@@ -63,7 +74,8 @@ export default async function ServicesPage() {
                   </Link>
                 </div>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
