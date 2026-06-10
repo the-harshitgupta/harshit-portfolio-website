@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   alternates: { canonical: `${site.url}/services` },
 };
 
+export const revalidate = 60;
+
 export default async function ServicesPage() {
   const [services, testimonials] = await Promise.all([
     getPublishedServices(),
