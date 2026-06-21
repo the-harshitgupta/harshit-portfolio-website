@@ -7,18 +7,20 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Harshit Gupta - a marketer with 5+ years in business operations, brand strategy, and marketing. ICP research, GTM, positioning, analytics, and AI for marketing.",
+    "Harshit Gupta - marketing & growth strategist for founders and D2C brands. Go-to-market strategy, ICP research, positioning, content strategy, and marketing analytics.",
   alternates: { canonical: `${site.url}/about` },
 };
 
 const skills = [
-  "GTM Strategy",
-  "ICP & Personas",
-  "Brand Positioning",
+  "Marketing Strategy",
+  "Growth Strategy",
+  "Go-to-Market (GTM)",
+  "ICP & Buyer Personas",
+  "Brand Positioning & Messaging",
+  "Content Strategy",
   "Marketing Analytics",
   "Power BI",
   "AI for Marketing",
-  "Content Strategy",
   "Competitive Research",
 ];
 
@@ -49,10 +51,11 @@ export default function AboutPage() {
                 A marketer who turns confusion into a clear customer strategy.
               </h1>
               <p className="mt-5 text-muted">
-                With 5+ years across business operations, brand strategy, and
-                marketing, including research and brand strategy at a fintech
-                firm, I focus on one thing: helping businesses understand who
-                they serve and how to communicate value.
+                With 5+ years running marketing and operations for a growing
+                business - plus a fintech internship focused on customer
+                research and positioning - I&apos;ve learned that one thing
+                matters most: helping businesses understand who they serve and
+                how to communicate value.
               </p>
               <p className="mt-4 text-muted">
                 I combine market research, marketing analytics, and AI-assisted
