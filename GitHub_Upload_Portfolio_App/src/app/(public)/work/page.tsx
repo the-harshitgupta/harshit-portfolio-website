@@ -7,9 +7,9 @@ import { getPublishedWork } from "@/lib/work";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Work & Case Samples",
+  title: "Sample Work & Deliverables",
   description:
-    "Sample GTM, ICP, and brand strategy projects - B2B SaaS go-to-market, D2C buyer personas, and productized ICP research deliverables.",
+    "Sample marketing & growth strategy projects - go-to-market plans, ICP & buyer personas, positioning, and content strategy deliverables for founders and D2C brands.",
   alternates: { canonical: `${site.url}/work` },
 };
 
@@ -50,7 +50,7 @@ export default async function WorkPage() {
                       href={`/work/${w.slug}`}
                       className="mt-3.5 inline-flex items-center gap-1.5 text-[0.88rem] font-semibold text-navy hover:text-teal-deep"
                     >
-                      View case study &#8594;
+                      View sample &#8594;
                     </Link>
                   </div>
                 </div>
