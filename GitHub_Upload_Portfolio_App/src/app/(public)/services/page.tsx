@@ -9,9 +9,9 @@ import { getPublishedServices } from "@/lib/services";
 import { getPublishedTestimonials } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
-  title: "Services & Pricing",
+  title: "Marketing & Growth Strategy Services for Startups & D2C Brands",
   description:
-    "GTM strategy, ICP & buyer persona research, brand positioning, marketing analytics, and AI content strategy. Clear deliverables with INR and USD pricing.",
+    "Marketing & growth strategy services - customer/ICP clarity, go-to-market plans, positioning & messaging, content strategy, and marketing analytics. Clear deliverables with INR and USD pricing.",
   alternates: { canonical: `${site.url}/services` },
 };
 
