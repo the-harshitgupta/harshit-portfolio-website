@@ -1,10 +1,10 @@
 export const site = {
   name: "Harshit Gupta",
-  role: "GTM & Brand Strategy Consultant",
+  role: "Marketing & Growth Strategist for Founders & D2C Brands",
   tagline:
     "Helping founders find their best customers and the message that sells.",
   description:
-    "GTM, ICP research, brand positioning, marketing analytics, and AI-assisted marketing strategy for startups, D2C brands, and small businesses.",
+    "Marketing & growth strategist helping founders, startups, and D2C brands get more of the right customers - with go-to-market strategy, positioning, content, and marketing analytics that drive real growth.",
   email: "harshit.growthpilot@gmail.com",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.theharshitgupta.com",
   location: "New Delhi, India",
@@ -187,13 +187,16 @@ export const processSteps = [
   },
 ];
 
+// Keep these in sync with the service display names in the admin panel.
+// The service detail page deep-links to /contact?need=<service title>, so
+// these labels must match the live service titles for the dropdown to preselect.
 export const needOptions = [
-  "ICP & Positioning Audit",
-  "GTM Clarity Sprint",
-  "Advisory Retainer",
-  "Brand Positioning Rewrite",
-  "Marketing Analytics & KPIs",
-  "AI Content Strategy System",
+  "Marketing Clarity Audit",
+  "Growth Strategy Sprint",
+  "Fractional Growth Partner",
+  "Messaging & Positioning Rewrite",
+  "Marketing Metrics That Matter",
+  "AI Content Engine",
   "ICP & Positioning Workshop",
   "Not sure yet",
 ];
