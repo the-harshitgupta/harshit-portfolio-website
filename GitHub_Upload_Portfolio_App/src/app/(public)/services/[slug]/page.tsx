@@ -56,6 +56,9 @@ export default async function ServiceDetailPage({
   const faqs = parseFaqs(service.faqs);
   const detailsHtml = service.details ? renderMarkdown(service.details) : "";
   const url = `${site.url}/services/${service.slug}`;
+  const otherServices = (await getPublishedServices()).filter(
+    (s) => s.slug !== service.slug
+  );
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
@@ -217,6 +220,29 @@ export default async function ServiceDetailPage({
           </div>
         </section>
       )}
+
+      <section className="border-t border-line py-16">
+        <div className="wrap">
+          <div className="sec-tag">Explore More</div>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+            Other ways I can help.
+          </h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {otherServices.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/services/${s.slug}`}
+                className="card-base group flex items-center justify-between gap-3 bg-white p-5 transition hover:-translate-y-1 hover:border-[#bfe0e0] hover:shadow-soft"
+              >
+                <span className="font-semibold text-navy group-hover:text-teal-deep">
+                  {s.title}
+                </span>
+                <span className="text-teal-deep">&#8594;</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <CTASection />
     </>
