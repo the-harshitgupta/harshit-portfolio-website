@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import LazyHero3D from "@/components/LazyHero3D";
@@ -12,6 +13,15 @@ import { formatDate } from "@/lib/utils";
 import { getPublishedServices } from "@/lib/services";
 import { getPublishedWork } from "@/lib/work";
 import { getPublishedTestimonials } from "@/lib/testimonials";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Marketing & Growth Strategist for Founders | Harshit Gupta",
+  },
+  description:
+    "I help founders, startups, and D2C brands get more of the right customers - with clear go-to-market strategy, positioning, content, and marketing analytics.",
+  alternates: { canonical: site.url },
+};
 
 export const revalidate = 60;
 
@@ -64,6 +74,10 @@ export default async function HomePage() {
                 View Sample Work
               </Link>
             </div>
+            <p className="mt-5 text-sm text-muted">
+              25+ in-depth growth guides published &middot; sample GTM &amp; ICP
+              playbooks &middot; content ranking on Google
+            </p>
             <div className="mt-9 flex flex-wrap gap-7">
               {[
                 ["5+ yrs", "Business & brand strategy"],
@@ -197,7 +211,7 @@ export default async function HomePage() {
                       href={`/work/${w.slug}`}
                       className="mt-3.5 inline-flex items-center gap-1.5 text-[0.88rem] font-semibold text-navy hover:text-teal-deep"
                     >
-                      View case study &#8594;
+                      View sample &#8594;
                     </Link>
                   </div>
                 </div>
