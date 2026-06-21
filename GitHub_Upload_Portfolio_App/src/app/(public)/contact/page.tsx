@@ -55,7 +55,7 @@ export default async function ContactPage({
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-ink hover:text-teal-deep"
               >
-                <Ico>&#9733;</Ico> Fiverr - ICP & Buyer Persona gig
+                <Ico>&#9733;</Ico> Fiverr profile
               </a>
             </div>
 
