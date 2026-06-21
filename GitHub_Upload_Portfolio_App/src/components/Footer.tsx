@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { nav, resourceLinks, site } from "@/lib/site";
+import { getPublishedServices } from "@/lib/services";
 
-export default function Footer() {
+export default async function Footer() {
   const year = new Date().getFullYear();
+  const services = await getPublishedServices();
   return (
     <footer className="mt-24 border-t border-line bg-white">
-      <div className="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="wrap grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
         <div>
           <div className="font-serif text-xl font-extrabold">
             Harshit<span className="text-teal-deep">.</span>Gupta
@@ -26,6 +28,22 @@ export default function Footer() {
               <li key={n.href}>
                 <Link href={n.href} className="hover:text-teal-deep">
                   {n.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <div className="sec-tag mb-3">Services</div>
+          <ul className="space-y-2 text-sm text-muted">
+            {services.map((s) => (
+              <li key={s.slug}>
+                <Link
+                  href={`/services/${s.slug}`}
+                  className="hover:text-teal-deep"
+                >
+                  {s.title}
                 </Link>
               </li>
             ))}
