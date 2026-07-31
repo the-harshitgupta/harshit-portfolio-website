@@ -10,17 +10,17 @@ export default function TestimonialsSection({
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="border-y border-line bg-white py-20">
+    <section className="border-y border-line bg-white py-14 md:py-20">
       <div className="wrap">
         <SectionHead
           tag="Client Words"
           title="Trusted for clear thinking and practical execution."
           subtitle="A few words from founders and operators who needed sharper targeting, messaging, and go-to-market direction."
         />
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3 md:gap-6">
           {testimonials.slice(0, 3).map((t, i) => (
             <Reveal key={t.id || t.name} delay={i * 60}>
-              <figure className="card-base h-full bg-cream p-7">
+              <figure className="card-base h-full bg-cream p-5 md:p-7">
                 <div
                   className="mb-4 text-sm font-bold tracking-[0.2em] text-teal-deep"
                   aria-label={`${Math.max(1, Math.min(5, t.rating))} out of 5 rating`}

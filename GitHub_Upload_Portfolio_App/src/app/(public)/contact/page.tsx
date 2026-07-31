@@ -3,6 +3,7 @@ import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import { site } from "@/lib/site";
+import { getPublishedServices } from "@/lib/services";
 import { getPublishedTestimonials } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
@@ -17,7 +18,10 @@ export default async function ContactPage({
 }: {
   searchParams: { need?: string };
 }) {
-  const testimonials = await getPublishedTestimonials();
+  const [testimonials, services] = await Promise.all([
+    getPublishedTestimonials(),
+    getPublishedServices(),
+  ]);
 
   return (
     <>
@@ -64,7 +68,7 @@ export default async function ContactPage({
                 What happens next?
               </h3>
               <ol className="mt-3 space-y-2 text-sm text-muted">
-                <li>1. You send the form (takes 2 minutes).</li>
+                <li>1. You send the form (name and email is enough).</li>
                 <li>
                   2. I review your site/offer and reply within 1 business day.
                 </li>
@@ -74,7 +78,10 @@ export default async function ContactPage({
           </Reveal>
 
           <Reveal delay={120}>
-            <ContactForm defaultNeed={searchParams.need || ""} />
+            <ContactForm
+              defaultNeed={searchParams.need || ""}
+              options={services.map((s) => s.title)}
+            />
           </Reveal>
         </div>
       </section>

@@ -180,7 +180,12 @@ export default async function PostPage({
           {post.coverImage && (
             <div className="mt-8 overflow-hidden rounded-xl2 border border-line">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={post.coverImage} alt={post.title} className="w-full" />
+              <img
+                src={post.coverImage}
+                alt={post.title}
+                decoding="async"
+                className="w-full"
+              />
             </div>
           )}
 

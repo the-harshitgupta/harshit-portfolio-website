@@ -5,9 +5,18 @@ import { needOptions } from "@/lib/site";
 
 export default function ContactForm({
   defaultNeed = "",
+  options,
 }: {
   defaultNeed?: string;
+  /**
+   * Live service titles from the CMS. Service pages deep-link here with
+   * ?need=<title>, so hardcoding the list meant the dropdown silently stopped
+   * preselecting whenever a service was renamed.
+   */
+  options?: string[];
 }) {
+  const choices =
+    options && options.length ? [...options, "Not sure yet"] : needOptions;
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">(
     "idle"
   );
@@ -107,7 +116,8 @@ export default function ContactForm({
       <div className="grid gap-x-4 sm:grid-cols-2">
         <div>
           <label className="label" htmlFor="phone">
-            Phone Number
+            Phone / WhatsApp{" "}
+            <span className="font-normal text-muted">(optional)</span>
           </label>
           <input
             id="phone"
@@ -115,8 +125,7 @@ export default function ContactForm({
             type="tel"
             autoComplete="tel"
             className="field"
-            placeholder="+91 98765 43210"
-            required
+            placeholder="Only if you prefer a call"
           />
         </div>
         <div>
@@ -139,9 +148,13 @@ export default function ContactForm({
         id="need"
         name="need"
         className="field"
-        defaultValue={defaultNeed || needOptions[0]}
+        defaultValue={
+          defaultNeed && choices.includes(defaultNeed)
+            ? defaultNeed
+            : choices[0]
+        }
       >
-        {needOptions.map((o) => (
+        {choices.map((o) => (
           <option key={o} value={o}>
             {o}
           </option>

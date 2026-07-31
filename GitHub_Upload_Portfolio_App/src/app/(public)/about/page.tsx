@@ -5,9 +5,9 @@ import CTASection from "@/components/CTASection";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About - Growth Strategist for Founders",
   description:
-    "Harshit Gupta - marketing & growth strategist for founders and D2C brands. Go-to-market strategy, ICP research, positioning, content strategy, and marketing analytics.",
+    "Harshit Gupta - marketing and growth strategist for founders and D2C brands. Background, approach, and how I work on GTM, ICP and positioning.",
   alternates: { canonical: `${site.url}/about` },
 };
 

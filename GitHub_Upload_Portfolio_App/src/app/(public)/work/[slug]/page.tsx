@@ -104,7 +104,13 @@ export default async function WorkDetailPage({
             <Reveal delay={100}>
               <div className="overflow-hidden rounded-[26px] border border-line bg-white shadow-soft">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={work.image} alt={work.title} className="w-full" />
+                <img
+                  src={work.image}
+                  alt={work.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full"
+                />
               </div>
             </Reveal>
           </div>

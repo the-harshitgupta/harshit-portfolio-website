@@ -16,21 +16,22 @@ export async function POST(req: Request) {
     if (body.company) {
       return NextResponse.json({ ok: true, downloadUrl: DOWNLOAD_URL });
     }
-    if (name.length < 2) {
-      return NextResponse.json({ error: "Please enter your name." }, { status: 400 });
-    }
     if (!EMAIL_RE.test(email)) {
       return NextResponse.json({ error: "Please enter a valid email." }, { status: 400 });
     }
-    if (!PHONE_RE.test(phone)) {
+    // Name and phone are optional: the fewer fields a free download asks for,
+    // the more of them get completed. Both are enriched later on the call.
+    if (phone && !PHONE_RE.test(phone)) {
       return NextResponse.json({ error: "Please enter a valid phone number." }, { status: 400 });
     }
 
+    const leadName = name.length >= 2 ? name : "Checklist subscriber";
+
     await prisma.lead.create({
       data: {
-        name,
+        name: leadName,
         email,
-        phone,
+        phone: phone || null,
         need: "Free ICP Clarity Checklist",
         message:
           "Downloaded the Free ICP Clarity Checklist. Follow up with workshop or audit invitation.",
@@ -38,9 +39,9 @@ export async function POST(req: Request) {
       },
     });
     await notifyLeadSubmitted({
-      name,
+      name: leadName,
       email,
-      phone,
+      phone: phone || null,
       need: "Free ICP Clarity Checklist",
       message:
         "Downloaded the Free ICP Clarity Checklist. Follow up with workshop or audit invitation.",

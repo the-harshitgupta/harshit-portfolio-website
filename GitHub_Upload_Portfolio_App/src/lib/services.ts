@@ -29,6 +29,16 @@ export function splitBullets(bullets: string): string[] {
     .filter(Boolean);
 }
 
+/**
+ * Prices are free-text in the admin panel, so they drift: some rows say
+ * "From Rs.14,999", others "From \u20B914,999". Mixed currency notation on a
+ * pricing page reads as careless, so normalise it at render time rather than
+ * relying on every future edit being typed consistently.
+ */
+export function normalisePrice(price: string): string {
+  return price.replace(/\bRs\.?\s*(?=[\d\u20B9])/gi, "\u20B9");
+}
+
 function fallback(): DisplayService[] {
   return fallbackServices.map((s, i) => ({
     slug: s.title
@@ -38,7 +48,7 @@ function fallback(): DisplayService[] {
     icon: s.icon,
     title: s.title,
     blurb: s.blurb,
-    price: s.price,
+    price: normalisePrice(s.price),
     bullets: s.bullets,
     seoTitle: `${s.title} | Harshit Gupta`,
     seoDescription: s.blurb,
@@ -70,7 +80,7 @@ function mapService(s: {
     icon: s.icon,
     title: s.title,
     blurb: s.blurb,
-    price: s.price,
+    price: normalisePrice(s.price),
     bullets: splitBullets(s.bullets),
     seoTitle: s.seoTitle,
     seoDescription: s.seoDescription,

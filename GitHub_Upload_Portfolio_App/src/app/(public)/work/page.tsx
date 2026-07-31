@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import SafeImage from "@/components/SafeImage";
 import SectionHead from "@/components/SectionHead";
 import CTASection from "@/components/CTASection";
 import { getPublishedWork } from "@/lib/work";
@@ -9,7 +10,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Sample Work & Deliverables",
   description:
-    "Sample marketing & growth strategy projects - go-to-market plans, ICP & buyer personas, positioning, and content strategy deliverables for founders and D2C brands.",
+    "Sample go-to-market plans, ICP and buyer persona research, and positioning deliverables built for founders and D2C brands.",
   alternates: { canonical: `${site.url}/work` },
 };
 
@@ -30,12 +31,12 @@ export default async function WorkPage() {
             {works.map((w, i) => (
               <Reveal key={w.title} delay={i * 60}>
                 <div className="card-base group h-full overflow-hidden transition hover:-translate-y-1.5 hover:shadow-soft">
-                  <div className="aspect-[16/10] overflow-hidden border-b border-line bg-[#eef4f4]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                  <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-[#eef4f4]">
+                    <SafeImage
                       src={w.image}
                       alt={w.title}
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover transition duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6">

@@ -15,25 +15,27 @@ export async function POST(req: Request) {
     const need = String(body.need || "").trim();
     const message = String(body.message || "").trim();
 
+    // honeypot (optional field named "company" left empty by humans)
+    if (body.company) {
+      return NextResponse.json({ ok: true });
+    }
     if (name.length < 2) {
       return NextResponse.json({ error: "Please enter your name." }, { status: 400 });
     }
     if (!EMAIL_RE.test(email)) {
       return NextResponse.json({ error: "Please enter a valid email." }, { status: 400 });
     }
-    if (!PHONE_RE.test(phone)) {
+    // Phone is optional: an email address is enough to deliver a free audit,
+    // and requiring a number measurably suppresses submissions.
+    if (phone && !PHONE_RE.test(phone)) {
       return NextResponse.json({ error: "Please enter a valid phone number." }, { status: 400 });
-    }
-    // honeypot (optional field named "company" left empty by humans)
-    if (body.company) {
-      return NextResponse.json({ ok: true });
     }
 
     await prisma.lead.create({
       data: {
         name,
         email,
-        phone,
+        phone: phone || null,
         business: business || null,
         need: need || null,
         message: message || null,
@@ -43,7 +45,7 @@ export async function POST(req: Request) {
     await notifyLeadSubmitted({
       name,
       email,
-      phone,
+      phone: phone || null,
       business: business || null,
       need: need || null,
       message: message || null,

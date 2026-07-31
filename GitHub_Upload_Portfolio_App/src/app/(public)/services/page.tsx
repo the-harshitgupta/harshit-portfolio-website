@@ -9,9 +9,11 @@ import { getPublishedServices } from "@/lib/services";
 import { getPublishedTestimonials } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
-  title: "Marketing & Growth Strategy Services for Startups & D2C Brands",
+  // Title template appends " | Harshit Gupta" (16 chars), so the page title
+  // must stay under ~44 characters to avoid SERP truncation.
+  title: "Marketing & Growth Strategy Services",
   description:
-    "Marketing & growth strategy services - customer/ICP clarity, go-to-market plans, positioning & messaging, content strategy, and marketing analytics. Clear deliverables with INR and USD pricing.",
+    "GTM plans, ICP research, positioning, content strategy and marketing analytics for founders. Clear deliverables, fixed pricing in INR and USD.",
   alternates: { canonical: `${site.url}/services` },
 };
 

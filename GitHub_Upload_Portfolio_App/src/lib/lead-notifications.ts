@@ -3,7 +3,7 @@ import { site } from "@/lib/site";
 type LeadNotification = {
   name: string;
   email: string;
-  phone: string;
+  phone?: string | null;
   business?: string | null;
   need?: string | null;
   message?: string | null;

@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "ICP & Positioning Workshop Waitlist",
   description:
-    "Join the waitlist for a beginner-friendly ICP and positioning workshop to find your best customers, write a clearer message, and plan your next marketing actions.",
+    "Join the waitlist for a beginner-friendly ICP and positioning workshop: find your best customers and write a message that converts.",
   alternates: { canonical: `${site.url}/workshop` },
 };
 

@@ -7,8 +7,11 @@ const DOWNLOAD_URL = "/resources/free-icp-clarity-checklist.html";
 
 export default function LeadMagnetForm({
   compact = false,
+  inline = false,
 }: {
   compact?: boolean;
+  /** Single-field email capture for the hero. Lowest possible friction. */
+  inline?: boolean;
 }) {
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">(
     "idle"
@@ -46,6 +49,72 @@ export default function LeadMagnetForm({
       setStatus("error");
       setError(err instanceof Error ? err.message : "Something went wrong");
     }
+  }
+
+  if (status === "ok" && inline) {
+    return (
+      <div
+        className="rounded-[14px] border border-[#bfe0e0] bg-teal-soft px-4 py-3.5"
+        role="status"
+        aria-live="polite"
+      >
+        <p className="text-[0.92rem] font-semibold text-navy">
+          Done - your checklist is ready.
+        </p>
+        <a
+          href={DOWNLOAD_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-1 inline-block text-[0.88rem] font-semibold text-teal-deep underline"
+        >
+          Open the ICP Clarity Checklist &#8594;
+        </a>
+      </div>
+    );
+  }
+
+  if (inline) {
+    return (
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          aria-hidden="true"
+        />
+        <div className="flex flex-col gap-2.5 sm:flex-row">
+          <label className="sr-only" htmlFor="hero-email">
+            Your email
+          </label>
+          <input
+            id="hero-email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            placeholder="you@email.com"
+            className="h-[46px] flex-1 rounded-[12px] border border-line bg-white px-4 text-[0.95rem] outline-none transition focus:border-teal focus:ring-2 focus:ring-teal/20"
+          />
+          <button
+            type="submit"
+            className="btn btn-primary h-[46px] whitespace-nowrap"
+            disabled={status === "sending"}
+          >
+            {status === "sending" ? "Sending..." : "Get the Free Checklist"}
+          </button>
+        </div>
+        {status === "error" && (
+          <p className="mt-2 text-[0.83rem] text-red-600" role="alert">
+            {error}
+          </p>
+        )}
+        <p className="mt-2 text-[0.8rem] text-muted">
+          Just your email. No spam, unsubscribe anytime.
+        </p>
+      </form>
+    );
   }
 
   if (status === "ok") {
@@ -122,7 +191,8 @@ export default function LeadMagnetForm({
       />
 
       <label className="label" htmlFor="lead-phone">
-        Phone / WhatsApp
+        Phone / WhatsApp{" "}
+        <span className="font-normal text-muted">(optional)</span>
       </label>
       <input
         id="lead-phone"
@@ -130,8 +200,7 @@ export default function LeadMagnetForm({
         type="tel"
         autoComplete="tel"
         className="field"
-        placeholder="+91 98765 43210"
-        required
+        placeholder="Only if you want a callback"
       />
 
       {status === "error" && (
