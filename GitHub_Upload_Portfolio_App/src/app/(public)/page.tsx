@@ -51,39 +51,14 @@ export default async function HomePage() {
       {/* HERO */}
       <section className="relative flex items-center overflow-hidden md:min-h-[calc(100vh-72px)]">
         <LazyHero3D />
-        <div className="wrap relative z-10 grid items-center gap-8 py-10 md:gap-10 md:py-16 md:grid-cols-[1.15fr_0.85fr]">
-          {/* Message before face: the headline has to land inside 5 seconds,
-              so on mobile the photo sits below the copy as a credibility block. */}
-          <div className="relative order-last mx-auto">
-            <div className="relative w-[min(240px,62vw)] overflow-hidden rounded-[26px] border-[6px] border-white bg-[#dceeef] shadow-soft md:w-[min(360px,80vw)]">
-              <Image
-                src="/harshit.png"
-                alt={`${site.name}, ${site.role}`}
-                width={420}
-                height={520}
-                priority
-                sizes="(max-width: 768px) 240px, 360px"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            {/* Chips overflow the viewport on small screens */}
-            <Chip className="left-[-26px] top-6 hidden md:flex">
-              &#9673; ICP Clarity
-            </Chip>
-            <Chip className="bottom-16 right-[-30px] hidden [animation-delay:1.4s] md:flex">
-              &#9650; GTM Roadmap
-            </Chip>
-            <Chip className="bottom-[-18px] left-8 hidden [animation-delay:.7s] md:flex">
-              &#9632; AI-assisted Research
-            </Chip>
-          </div>
-
-          <div className="order-first">
+        <div className="wrap relative z-10 grid items-start gap-8 py-10 md:grid-cols-[1.15fr_0.85fr] md:items-center md:gap-12 md:py-16">
+          {/* Copy column — left edge is the alignment spine for badge, H1, form, stats */}
+          <div className="min-w-0">
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#cfeaea] bg-teal-soft px-4 py-1.5 text-[0.8rem] font-semibold text-teal-deep md:mb-5">
               <span className="h-2 w-2 rounded-full bg-teal shadow-[0_0_0_4px_rgba(10,143,150,.18)]" />
               GTM &middot; Brand Strategy &middot; AI Marketing
             </span>
-            <h1 className="font-serif text-[clamp(2rem,5vw,3.7rem)] font-extrabold leading-[1.1] tracking-tight">
+            <h1 className="max-w-xl font-serif text-[clamp(2rem,5vw,3.7rem)] font-extrabold leading-[1.1] tracking-tight">
               Helping founders find their{" "}
               <em className="not-italic text-teal-deep">best customers</em> and the
               message that sells.
@@ -102,26 +77,54 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            {/* Zero-friction alternative for visitors not ready to book */}
-            <div className="mt-6 max-w-md rounded-[16px] border border-line bg-white/80 p-4 backdrop-blur-sm md:mt-8">
+            {/* Same max-width as subcopy so left edges stay flush */}
+            <div className="mt-6 max-w-xl rounded-[16px] border border-line bg-white/90 p-4 backdrop-blur-sm md:mt-8">
               <p className="mb-2.5 text-[0.88rem] font-semibold text-navy">
                 Not ready to talk? Start with the free ICP Clarity Checklist.
               </p>
               <LeadMagnetForm inline />
             </div>
 
-            <div className="mt-7 hidden flex-wrap gap-7 sm:flex md:mt-9">
+            <div className="mt-7 hidden max-w-xl grid-cols-3 gap-4 border-t border-line pt-6 sm:grid md:mt-9">
               {[
                 ["5+ yrs", "Business & brand strategy"],
                 ["D2C / SaaS", "B2B & MSME focus"],
                 ["MBA", "FIIB, Delhi"],
               ].map(([b, s]) => (
-                <div key={b} className="flex flex-col">
-                  <b className="font-serif text-xl text-navy md:text-2xl">{b}</b>
-                  <small className="text-[0.82rem] text-muted">{s}</small>
+                <div key={b} className="min-w-0">
+                  <b className="block font-serif text-xl leading-none text-navy md:text-2xl">
+                    {b}
+                  </b>
+                  <small className="mt-1.5 block text-[0.78rem] leading-snug text-muted">
+                    {s}
+                  </small>
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Photo — below copy on mobile, right column on desktop */}
+          <div className="relative mx-auto w-full max-w-[360px] md:mx-0 md:justify-self-end">
+            <div className="relative mx-auto w-[min(240px,62vw)] overflow-hidden rounded-[26px] border-[6px] border-white bg-[#dceeef] shadow-soft md:w-full md:max-w-[360px]">
+              <Image
+                src="/harshit.png"
+                alt={`${site.name}, ${site.role}`}
+                width={420}
+                height={520}
+                priority
+                sizes="(max-width: 768px) 240px, 360px"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <Chip className="left-[-26px] top-6 hidden md:flex">
+              &#9673; ICP Clarity
+            </Chip>
+            <Chip className="bottom-16 right-[-30px] hidden [animation-delay:1.4s] md:flex">
+              &#9650; GTM Roadmap
+            </Chip>
+            <Chip className="bottom-[-18px] left-8 hidden [animation-delay:.7s] md:flex">
+              &#9632; AI-assisted Research
+            </Chip>
           </div>
         </div>
       </section>
@@ -134,25 +137,29 @@ export default async function HomePage() {
             title="Productized strategy, built to be executed."
             subtitle="Clear deliverables and practical roadmaps you can act on immediately, not a long report no one reads."
           />
-          <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+          <div className="grid auto-rows-fr gap-5 md:grid-cols-3 md:gap-6">
             {services.slice(0, 6).map((s, i) => (
               // Mobile shows the top 3; the rest live on /services
-              <div key={s.title} className={i >= 3 ? "hidden md:block" : ""}>
+              <div
+                key={s.title}
+                className={`h-full ${i >= 3 ? "hidden md:block" : ""}`}
+              >
                 <Reveal delay={i * 60}>
                   <Link
                     href={`/services/${s.slug}`}
-                    className="card-base group block h-full p-5 transition hover:-translate-y-1.5 hover:border-[#bfe0e0] hover:shadow-soft md:p-7"
+                    className="card-base group flex h-full flex-col p-5 transition hover:-translate-y-1.5 hover:border-[#bfe0e0] hover:shadow-soft md:p-7"
                   >
-                    <div className="mb-3 grid h-11 w-11 place-items-center rounded-[13px] bg-gradient-to-br from-teal to-teal-deep text-lg text-white md:mb-4 md:h-12 md:w-12 md:text-xl">
+                    <div className="mb-3 grid h-11 w-11 shrink-0 place-items-center rounded-[13px] bg-gradient-to-br from-teal to-teal-deep text-lg text-white md:mb-4 md:h-12 md:w-12 md:text-xl">
                       {s.icon}
                     </div>
                     <h3 className="font-serif text-[1.1rem] font-semibold md:text-[1.18rem]">
                       {s.title}
                     </h3>
-                    <p className="mt-2 line-clamp-3 text-[0.9rem] text-muted md:line-clamp-none md:text-[0.94rem]">
+                    {/* Fixed line clamp so every card shares the same body height */}
+                    <p className="mt-2 line-clamp-4 flex-1 text-[0.9rem] text-muted md:text-[0.94rem]">
                       {s.blurb}
                     </p>
-                    <div className="mt-3 text-[0.92rem] font-bold text-navy md:mt-4">
+                    <div className="mt-auto border-t border-line pt-3 text-[0.92rem] font-bold text-navy md:pt-4">
                       {s.price}
                     </div>
                   </Link>
@@ -204,13 +211,16 @@ export default async function HomePage() {
             title="Sample strategy projects."
             subtitle="Portfolio samples that show how I think: problem, research, strategy, and a practical deliverable."
           />
-          <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+          <div className="grid auto-rows-fr gap-5 md:grid-cols-3 md:gap-6">
             {works.map((w, i) => (
               // Mobile shows 2 samples; the third is one tap away on /work
-              <div key={w.title} className={i >= 2 ? "hidden md:block" : ""}>
+              <div
+                key={w.title}
+                className={`h-full ${i >= 2 ? "hidden md:block" : ""}`}
+              >
                 <Reveal delay={i * 60}>
-                  <div className="card-base group h-full overflow-hidden transition hover:-translate-y-1.5 hover:shadow-soft">
-                    <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-[#eef4f4]">
+                  <div className="card-base group flex h-full flex-col overflow-hidden transition hover:-translate-y-1.5 hover:shadow-soft">
+                    <div className="relative aspect-[16/10] shrink-0 overflow-hidden border-b border-line bg-[#eef4f4]">
                       <SafeImage
                         src={w.image}
                         alt={w.title}
@@ -218,17 +228,19 @@ export default async function HomePage() {
                         className="object-cover transition duration-500 group-hover:scale-105"
                       />
                     </div>
-                    <div className="p-5 md:p-6">
+                    <div className="flex flex-1 flex-col p-5 md:p-6">
                       <div className="text-[0.74rem] font-bold uppercase tracking-wide text-teal-deep">
                         {w.tag}
                       </div>
                       <h3 className="mt-2 font-serif text-[1.08rem] font-semibold md:text-[1.12rem]">
                         {w.title}
                       </h3>
-                      <p className="mt-2 text-[0.9rem] text-muted">{w.desc}</p>
+                      <p className="mt-2 line-clamp-3 flex-1 text-[0.9rem] text-muted">
+                        {w.desc}
+                      </p>
                       <Link
                         href={`/work/${w.slug}`}
-                        className="mt-3.5 inline-flex items-center gap-1.5 text-[0.88rem] font-semibold text-navy hover:text-teal-deep"
+                        className="mt-auto inline-flex items-center gap-1.5 pt-3.5 text-[0.88rem] font-semibold text-navy hover:text-teal-deep"
                       >
                         View sample &#8594;
                       </Link>

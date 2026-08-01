@@ -35,7 +35,7 @@ export default async function ServicesPage() {
             title="Pick the outcome you need next."
             subtitle="Productized engagements with clear scope, timelines, and pricing in INR and USD. Need something custom? Just ask in the contact form."
           />
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid auto-rows-fr gap-6 md:grid-cols-2">
             {services.map((s, i) => {
               const isHero = /audit/i.test(s.slug) || /audit/i.test(s.title);
               return (
@@ -51,10 +51,10 @@ export default async function ServicesPage() {
                     </span>
                   )}
                   <div className="flex items-start justify-between gap-4">
-                    <div className="grid h-12 w-12 place-items-center rounded-[13px] bg-gradient-to-br from-teal to-teal-deep text-xl text-white">
+                    <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[13px] bg-gradient-to-br from-teal to-teal-deep text-xl text-white">
                       {s.icon}
                     </div>
-                    <div className="rounded-full bg-teal-soft px-3 py-1 text-[0.82rem] font-bold text-teal-deep">
+                    <div className="shrink-0 rounded-full bg-teal-soft px-3 py-1 text-[0.82rem] font-bold text-teal-deep">
                       {s.price}
                     </div>
                   </div>
@@ -62,7 +62,7 @@ export default async function ServicesPage() {
                     {s.title}
                   </h3>
                   <p className="mt-2 text-[0.94rem] text-muted">{s.blurb}</p>
-                  <ul className="mt-4 space-y-2 text-[0.92rem] text-muted">
+                  <ul className="mt-4 flex-1 space-y-2 text-[0.92rem] text-muted">
                     {s.bullets.map((b) => (
                       <li key={b} className="flex gap-2.5">
                         <span className="mt-0.5 text-teal-deep">&#10003;</span>
@@ -70,12 +70,14 @@ export default async function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link
-                    href={`/services/${s.slug}`}
-                    className="btn btn-primary mt-6 self-start"
-                  >
-                    View service details
-                  </Link>
+                  <div className="mt-auto pt-6">
+                    <Link
+                      href={`/services/${s.slug}`}
+                      className="btn btn-primary"
+                    >
+                      View service details
+                    </Link>
+                  </div>
                 </div>
               </Reveal>
               );

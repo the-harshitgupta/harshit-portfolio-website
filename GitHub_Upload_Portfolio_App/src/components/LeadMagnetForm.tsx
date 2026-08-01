@@ -84,7 +84,7 @@ export default function LeadMagnetForm({
           className="hidden"
           aria-hidden="true"
         />
-        <div className="flex flex-col gap-2.5 sm:flex-row">
+        <div className="flex flex-col items-stretch gap-2.5 sm:flex-row sm:items-center">
           <label className="sr-only" htmlFor="hero-email">
             Your email
           </label>
@@ -95,11 +95,11 @@ export default function LeadMagnetForm({
             autoComplete="email"
             required
             placeholder="you@email.com"
-            className="h-[46px] flex-1 rounded-[12px] border border-line bg-white px-4 text-[0.95rem] outline-none transition focus:border-teal focus:ring-2 focus:ring-teal/20"
+            className="h-12 min-w-0 flex-1 rounded-[12px] border border-line bg-white px-4 text-[0.95rem] outline-none transition focus:border-teal focus:ring-2 focus:ring-teal/20"
           />
           <button
             type="submit"
-            className="btn btn-primary h-[46px] whitespace-nowrap"
+            className="btn btn-primary h-12 shrink-0 whitespace-nowrap !rounded-[12px] !py-0"
             disabled={status === "sending"}
           >
             {status === "sending" ? "Sending..." : "Get the Free Checklist"}
